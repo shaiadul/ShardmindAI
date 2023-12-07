@@ -1,11 +1,20 @@
-import Image from "next/image";
+"use client";
+// import { useRouter } from 'next/router';
 
 export default function Home() {
- 
+  // const router = useRouter();
 
-  return (
-    <main>
-    
-    </main>
-  );
+  // useEffect(() => {
+  //   const routeFunction = () => {
+  //     if (router.pathname === '/') {
+  //       router.push('/authentication/signin');
+  //     }
+  //   }; 
+  //   routeFunction();
+
+  //   // Cleanup function for useEffect
+  //   return () => {
+  //   };
+  // }, [router]);
+  return <main></main>;
 }

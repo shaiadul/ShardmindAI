@@ -69,13 +69,13 @@ const SignUp = () => {
                 Sign Up{" "}
               </h3>
               <p className="text-gray-400">
-                Do not have an account?{" "}
-                <a href="#" className="text-sm text-[#b14bf4] hover:opacity-75">
-                  Sign Up
+                Already have an account?{" "}
+                <a href="/authentication/signin" className="text-sm text-[#b14bf4] hover:opacity-75">
+                  Sign In
                 </a>
               </p>
             </div>
-            <div className="space-y-6">
+            <div className="space-y-6 text-gray-400">
               <div className="">
                 <input
                   className=" w-full text-sm  px-4 py-3 bg-gray-200 focus:bg-gray-100 border  border-gray-200 rounded-lg focus:outline-none focus:border-[#b14bf4] transition-colors"
@@ -88,9 +88,9 @@ const SignUp = () => {
                 <input
                   placeholder="Password"
                   type="show ? 'password' : 'text'"
-                  className="text-sm text-gray-200 px-4 py-3 rounded-lg w-full bg-gray-200 focus:bg-gray-100 border border-gray-200 focus:outline-none focus:border-purple-400"
+                  className="text-sm px-4 py-3 rounded-lg w-full bg-gray-200 focus:bg-gray-100 border border-gray-200 focus:outline-none focus:border-purple-400"
                 />
-                <div className="flex items-center absolute inset-y-0 right-0 mr-3  text-sm leading-5"></div>
+                <div className="flex items-center absolute inset-y-0 right-0 mr-3  text-sm leading-5">show</div>
               </div>
 
               <div className="flex items-center justify-between">
@@ -105,7 +105,7 @@ const SignUp = () => {
                   type="submit"
                   className="w-full flex justify-center bg-purple-800  hover:bg-purple-700 text-gray-100 p-3  rounded-lg tracking-wide font-semibold  cursor-pointer transition ease-in duration-500"
                 >
-                  Sign in
+                  Sign Up
                 </button>
               </div>
               <div className="flex items-center justify-center space-x-2 my-5">
@@ -152,8 +152,8 @@ const SignUp = () => {
                   href="#"
                   rel=""
                   target="_blank"
-                  title="Codepen aji"
-                  className="text-[#b14bf4] hover:opacity-75 "
+                  title=""
+                  className="text-[#b14bf4] hover:opacity-75 pl-1"
                 >
                   SHARDMIND
                 </a>

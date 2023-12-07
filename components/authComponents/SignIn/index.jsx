@@ -79,7 +79,7 @@ const SignIn = () => {
                 </Link>
               </p>
             </div>
-            <div className="space-y-6">
+            <div className="space-y-6 text-gray-400">
               <div className="">
                 <input
                   className=" w-full text-sm  px-4 py-3 bg-gray-200 focus:bg-gray-100 border  border-gray-200 rounded-lg focus:outline-none focus:border-[#b14bf4] transition-colors"
@@ -92,9 +92,9 @@ const SignIn = () => {
                 <input
                   placeholder="Password"
                   type="show ? 'password' : 'text'"
-                  className="text-sm text-gray-200 px-4 py-3 rounded-lg w-full bg-gray-200 focus:bg-gray-100 border border-gray-200 focus:outline-none focus:border-purple-400"
+                  className="text-sm px-4 py-3 rounded-lg w-full bg-gray-200 focus:bg-gray-100 border border-gray-200 focus:outline-none focus:border-purple-400"
                 />
-                <div className="flex items-center absolute inset-y-0 right-0 mr-3  text-sm leading-5"></div>
+                <div className="flex items-center absolute inset-y-0 right-0 mr-3  text-sm leading-5">show</div>
               </div>
 
               <div className="flex items-center justify-between">
@@ -157,7 +157,7 @@ const SignIn = () => {
                   rel=""
                   target="_blank"
                   title="Codepen aji"
-                  className="text-[#b14bf4] hover:opacity-75 "
+                  className="text-[#b14bf4] hover:opacity-75 pl-1"
                 >
                   SHARDMIND
                 </a>
