@@ -9,6 +9,22 @@ const AsideDashboard = () => {
       href: "/dashboard/personalfeed",
       label: "Personal Feed",
     },
+    {
+      href: "/dashboard/personalfeed",
+      label: "Personal Feed",
+    },
+    {
+      href: "/dashboard/personalfeed",
+      label: "Personal Feed",
+    },
+    {
+      href: "/dashboard/personalfeed",
+      label: "Personal Feed",
+    },
+    {
+      href: "/dashboard/personalfeed",
+      label: "Personal Feed",
+    },
   ];
   return (
     <div className="fixed flex flex-col top-14 left-0 w-14 hover:w-64 md:w-64 h-full transition-all duration-300 border-none z-10 sidebar ">
