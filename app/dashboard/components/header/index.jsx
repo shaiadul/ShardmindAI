@@ -6,15 +6,15 @@ import React from "react";
 const HeaderDashboard = () => {
   return (
     <div className=" w-full flex items-center justify-between h-16 fixed bg-black">
-      <div className="flex items-center justify-start md:justify-center pl-3 w-28 md:w-64 h-14 border-none">
+      <div className="flex items-center justify-center pl-3 border-none">
         <Link href="/dashboard">
           <img
-            className="object-contain h-10"
+            className="object-contain md:h-10 w-fit"
             src="https://i.ibb.co/ZY7Jvzk/logo2.png"
           />
         </Link>
       </div>
-      <div className="flex justify-between items-center h-14 header-right mr-5">
+      <div className="flex justify-between items-center h-14 header-right ml-2 mr-5">
         <ul className="flex items-center">
           <li className="flex justify-center items-center">
             <FontAwesomeIcon
@@ -24,7 +24,7 @@ const HeaderDashboard = () => {
             <span className="ml-1">250</span>
           </li>
           <li>
-            <button className="bg-gradient-to-r from-pink-500 to-violet-500 px-3 py-2 mx-5 rounded-lg">
+            <button className="bg-gradient-to-r from-pink-500 to-violet-500 px-2 md:px-3 py-1 md:py-2 mx-5 rounded-lg">
               Upgrade
             </button>
           </li>

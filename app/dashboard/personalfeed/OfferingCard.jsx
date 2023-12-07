@@ -11,7 +11,7 @@ const Offering = () => {
             alt=""
           />
         </a>
-        <div className="p-5">
+        <div className="py-5">
           <a href="#">
             <h5 className="text-gray-900 font-bold text-2xl tracking-tight mb-2 dark:text-white">
               Noteworthy technology acquisitions 2021
