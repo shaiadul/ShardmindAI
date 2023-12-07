@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import Animation from "@/components/animation";
 import React, { useRef, useState } from "react";
 
@@ -39,22 +39,22 @@ const OtpVerify = () => {
               </p>
             </div>
             <div className="space-y-6 text-gray-400">
-            <div class="flex flex-row items-center justify-between mx-auto w-full max-w-xs">
-        {otpValues.map((value, index) => (
-          <div key={index} class="w-16 h-16">
-            <input
-              ref={inputRefs[index]}
-              class="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-[#b14bf4]"
-              type="text"
-              name=""
-              id=""
-              maxLength={1}
-              value={value}
-              onChange={(e) => handleOtpChange(index, e.target.value)}
-            />
-          </div>
-        ))}
-      </div>
+              <div className="flex flex-row items-center justify-between mx-auto w-full max-w-xs">
+                {otpValues.map((value, index) => (
+                  <div key={index} className="w-16 h-16">
+                    <input
+                      ref={inputRefs[index]}
+                      className="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-[#b14bf4]"
+                      type="text"
+                      name=""
+                      id=""
+                      maxLength={1}
+                      value={value}
+                      onChange={(e) => handleOtpChange(index, e.target.value)}
+                    />
+                  </div>
+                ))}
+              </div>
               <div className="mt-10">
                 <span>
                   Did not recieve code?
@@ -74,7 +74,7 @@ const OtpVerify = () => {
                   type="submit"
                   className="w-full flex justify-center bg-purple-800  hover:bg-purple-700 text-gray-100 p-3  rounded-lg tracking-wide font-semibold  cursor-pointer transition ease-in duration-500"
                 >
-                  Confirm 
+                  Confirm
                 </button>
               </div>
             </div>

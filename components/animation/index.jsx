@@ -1,55 +1,55 @@
-import React from 'react'
+import React from "react";
 
 const Animation = () => {
   return (
-    <div class="wrapper">
-        <div>
-          <span class="dot"></span>
-        </div>
-        <div>
-          <span class="dot"></span>
-        </div>
-        <div>
-          <span class="dot"></span>
-        </div>
-        <div>
-          <span class="dot"></span>
-        </div>
-        <div>
-          <span class="dot"></span>
-        </div>
-        <div>
-          <span class="dot"></span>
-        </div>
-        <div>
-          <span class="dot"></span>
-        </div>
-        <div>
-          <span class="dot"></span>
-        </div>
-        <div>
-          <span class="dot"></span>
-        </div>
-        <div>
-          <span class="dot"></span>
-        </div>
-        <div>
-          <span class="dot"></span>
-        </div>
-        <div>
-          <span class="dot"></span>
-        </div>
-        <div>
-          <span class="dot"></span>
-        </div>
-        <div>
-          <span class="dot"></span>
-        </div>
-        <div>
-          <span class="dot"></span>
-        </div>
+    <div className="wrapper">
+      <div>
+        <span className="dot"></span>
       </div>
-  )
-}
+      <div>
+        <span className="dot"></span>
+      </div>
+      <div>
+        <span className="dot"></span>
+      </div>
+      <div>
+        <span className="dot"></span>
+      </div>
+      <div>
+        <span className="dot"></span>
+      </div>
+      <div>
+        <span className="dot"></span>
+      </div>
+      <div>
+        <span className="dot"></span>
+      </div>
+      <div>
+        <span className="dot"></span>
+      </div>
+      <div>
+        <span className="dot"></span>
+      </div>
+      <div>
+        <span className="dot"></span>
+      </div>
+      <div>
+        <span className="dot"></span>
+      </div>
+      <div>
+        <span className="dot"></span>
+      </div>
+      <div>
+        <span className="dot"></span>
+      </div>
+      <div>
+        <span className="dot"></span>
+      </div>
+      <div>
+        <span className="dot"></span>
+      </div>
+    </div>
+  );
+};
 
-export default Animation
+export default Animation;
