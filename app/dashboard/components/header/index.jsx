@@ -5,7 +5,7 @@ import React from "react";
 
 const HeaderDashboard = () => {
   return (
-    <div className=" w-full flex items-center justify-between h-16 fixed bg-black">
+    <div className=" w-full flex items-center justify-between h-16 fixed z-20 bg-black">
       <div className="flex items-center justify-center pl-3 border-none">
         <Link href="/dashboard">
           <img
