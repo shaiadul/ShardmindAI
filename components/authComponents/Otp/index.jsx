@@ -1,8 +1,22 @@
+'use client';
 import Animation from "@/components/animation";
-import Link from "next/link";
-import React from "react";
+import React, { useRef, useState } from "react";
 
 const OtpVerify = () => {
+  const [otpValues, setOtpValues] = useState(["", "", "", ""]);
+  const inputRefs = [useRef(null), useRef(null), useRef(null), useRef(null)];
+
+  const handleOtpChange = (index, value) => {
+    // Update the OTP value
+    const newOtpValues = [...otpValues];
+    newOtpValues[index] = value;
+    setOtpValues(newOtpValues);
+
+    // Move focus to the next input field
+    if (index < inputRefs.length - 1 && value !== "") {
+      inputRefs[index + 1].current.focus();
+    }
+  };
   return (
     <section className="container mx-auto">
       <div className="bg-[#b14bf4] absolute top-0 left-0 bg-gradient-to-tl from-gray-900 via-gray-900 to-[#b14bf4] bottom-0 leading-5 h-full w-full overflow-hidden"></div>
@@ -25,40 +39,22 @@ const OtpVerify = () => {
               </p>
             </div>
             <div className="space-y-6 text-gray-400">
-              <div class="flex flex-row items-center justify-between mx-auto w-full max-w-xs">
-                <div class="w-16 h-16 ">
-                  <input
-                    class="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-[#b14bf4]"
-                    type="text"
-                    name=""
-                    id=""
-                  />
-                </div>
-                <div class="w-16 h-16 ">
-                  <input
-                    class="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-[#b14bf4]"
-                    type="text"
-                    name=""
-                    id=""
-                  />
-                </div>
-                <div class="w-16 h-16 ">
-                  <input
-                    class="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-[#b14bf4]"
-                    type="text"
-                    name=""
-                    id=""
-                  />
-                </div>
-                <div class="w-16 h-16 ">
-                  <input
-                    class="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-[#b14bf4]"
-                    type="text"
-                    name=""
-                    id=""
-                  />
-                </div>
-              </div>
+            <div class="flex flex-row items-center justify-between mx-auto w-full max-w-xs">
+        {otpValues.map((value, index) => (
+          <div key={index} class="w-16 h-16">
+            <input
+              ref={inputRefs[index]}
+              class="w-full h-full flex flex-col items-center justify-center text-center px-5 outline-none rounded-xl border border-gray-200 text-lg bg-white focus:bg-gray-50 focus:ring-1 ring-[#b14bf4]"
+              type="text"
+              name=""
+              id=""
+              maxLength={1}
+              value={value}
+              onChange={(e) => handleOtpChange(index, e.target.value)}
+            />
+          </div>
+        ))}
+      </div>
               <div className="mt-10">
                 <span>
                   Did not recieve code?
