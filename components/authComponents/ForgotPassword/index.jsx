@@ -1,4 +1,5 @@
 "use client";
+import Animation from "@/components/animation";
 import React, { useState } from "react";
 
 const ForgotPassword = () => {
@@ -14,59 +15,13 @@ const ForgotPassword = () => {
   return (
     <section className="container mx-auto">
       <div className="bg-[#b14bf4] absolute top-0 left-0 bg-gradient-to-tl from-gray-900 via-gray-900 to-[#b14bf4] bottom-0 leading-5 h-full w-full overflow-hidden"></div>
-      <div class="wrapper">
-        <div>
-          <span class="dot"></span>
-        </div>
-        <div>
-          <span class="dot"></span>
-        </div>
-        <div>
-          <span class="dot"></span>
-        </div>
-        <div>
-          <span class="dot"></span>
-        </div>
-        <div>
-          <span class="dot"></span>
-        </div>
-        <div>
-          <span class="dot"></span>
-        </div>
-        <div>
-          <span class="dot"></span>
-        </div>
-        <div>
-          <span class="dot"></span>
-        </div>
-        <div>
-          <span class="dot"></span>
-        </div>
-        <div>
-          <span class="dot"></span>
-        </div>
-        <div>
-          <span class="dot"></span>
-        </div>
-        <div>
-          <span class="dot"></span>
-        </div>
-        <div>
-          <span class="dot"></span>
-        </div>
-        <div>
-          <span class="dot"></span>
-        </div>
-        <div>
-          <span class="dot"></span>
-        </div>
-      </div>
+      <Animation />
       <div className="relative min-h-screen sm:flex sm:flex-row justify-center bg-transparent p-3">
-        <div className="flex justify-center items-center self-center z-10 mt-10 md:mt-0 lg:mt-0 xl:mt-0">
+        <div className="flex justify-center items-center self-center z-10 mt-[50%] md:mt-0 lg:mt-0 xl:mt-0">
           <div className="p-8 bg-white mx-auto rounded-3xl w-96 ">
             <div className="mb-7">
               <h3 className="font-semibold font-serif text-2xl text-gray-800">
-                Set your new password{" "}
+                Set new password{" "}
               </h3>
             </div>
             <div className="space-y-6 text-gray-400">
