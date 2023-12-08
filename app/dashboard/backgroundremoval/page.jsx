@@ -1,4 +1,4 @@
-import ImageUpload from "./ImageUpload";
+
 import Steps from "./Steps";
 
 const page = () => {
@@ -17,7 +17,6 @@ const page = () => {
       </div>
 
       <Steps />
-      <ImageUpload />
     </section>
   );
 };
