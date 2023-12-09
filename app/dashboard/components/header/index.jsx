@@ -7,7 +7,7 @@ const HeaderDashboard = () => {
   return (
     <div className=" w-full flex items-center justify-between h-16 fixed z-20 bg-[#0c051f]">
       <div className="flex items-center justify-center pl-3 border-none">
-        <Link href="/dashboard">
+        <Link href="/dashboard/personalfeed">
           <img
             className="object-contain md:h-10 w-fit"
             src="https://i.ibb.co/ZY7Jvzk/logo2.png"
@@ -21,15 +21,15 @@ const HeaderDashboard = () => {
               icon={faBitcoin}
               className="text-[#ec58f6] w-5 h-5"
             />
-            <span className="ml-1">250</span>
+            <span className="ml-1 text-sm lg:text-lg">250</span>
           </li>
           <li>
-            <button className="bg-gradient-to-r from-pink-500 to-violet-500 px-2 md:px-3 py-1 md:py-2 mx-5 rounded-lg">
+            <button className="bg-gradient-to-r from-pink-500 to-violet-500 px-2 md:px-3 py-1 md:py-2 mx-5 rounded-lg text-sm">
               Upgrade
             </button>
           </li>
           <li>
-            <div className="w-10 h-10 object-fit">
+            <div className="w-7 lg:w-10 h-7 lg:h-10 object-fit">
               <img
                 className="rounded-full"
                 src="https://i.ibb.co/QcK63FR/1.jpg"

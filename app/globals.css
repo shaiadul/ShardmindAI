@@ -155,3 +155,29 @@ div .dot {
 .active:not(:first-child):before {
   @apply bg-green-600;
 }
+
+/* custom css for bottom navigation */
+.mobile-nav {
+  background: #0c051f;
+  position: fixed;
+  bottom: 0;
+  height: 50px;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+.bloc-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+}
+.bloc-icon:hover {
+  animation: bounce 0.5s;
+  animation-duration: 3s;
+}
+@media screen and (min-width: 600px) {
+  .mobile-nav {
+    display: none;
+  }
+}

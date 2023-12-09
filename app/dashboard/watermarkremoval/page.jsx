@@ -1,4 +1,5 @@
 import React from "react";
+import DrawingCanvasTest from "../components/drawingcanvas";
 
 const page = () => {
   return (
@@ -14,6 +15,7 @@ const page = () => {
           How to Use
         </p>
       </div>
+      <DrawingCanvasTest />
     </section>
   );
 };
