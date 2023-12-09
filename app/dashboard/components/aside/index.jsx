@@ -1,4 +1,4 @@
-import { faImage } from "@fortawesome/free-regular-svg-icons";
+import { faImage, faObjectGroup, faObjectUngroup } from "@fortawesome/free-regular-svg-icons";
 import { faHome } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
@@ -38,6 +38,22 @@ const AsideDashboard = () => {
               </span>
               <span className="ml-2 text-md font-semibold tracking-wide truncate">
               Background Removal
+              </span>
+            </Link>
+          </li>
+          <li>
+            <Link
+              href="/dashboard/objectremoval"
+              className="relative flex flex-row items-center h-11 focus:outline-none  focus-within:bg-gray-600 text-white-600 hover:text-white-800 pr-6 rounded-md"
+            >
+              <span className="inline-flex justify-center items-center ml-4">
+                <FontAwesomeIcon
+                  icon={faObjectUngroup}
+                  className="text-[#C61FA2] w-5 h-5"
+                />
+              </span>
+              <span className="ml-2 text-md font-semibold tracking-wide truncate">
+              Object Removal
               </span>
             </Link>
           </li>
