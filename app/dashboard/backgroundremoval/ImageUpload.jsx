@@ -43,20 +43,30 @@ const ImageUpload = ({ setCurrentStep, setComplete }) => {
       throw new Error(`Image upload failed: ${data.error.message}`);
     }
   };
-  console.log(imageURL);
+  const handleDownload = () => {
+    // Implement the download logic here, for example using the browser's download feature
+    if (imageURL) {
+      const link = document.createElement("a");
+      link.href = imageURL;
+      link.download = "downloaded_image";
+      link.click();
+    }
+  };
   return (
-    <div className="flex items-center justify-center font-sans my-20">
+    <div className="font-sans my-20">
       <label
         htmlFor="dropzone-file"
         className="mx-auto cursor-pointer flex w-full max-w-lg flex-col items-center rounded-xl border-4 border-dashed border-gradient-to-br from-[#FD5261] to-[#AA26B6] p-6 text-center"
       >
         {imageURL ? (
-          <img
-            src={imageURL}
-            alt="Uploaded"
-            className="mt-2 rounded-md border-2 border-gray-400"
-            style={{ maxWidth: "100%" }}
-          />
+          <>
+            <img
+              src={imageURL}
+              alt="Uploaded"
+              className="mt-2 rounded-md border-2 border-gray-400"
+              style={{ maxWidth: "100%" }}
+            />
+          </>
         ) : (
           <>
             <svg
@@ -90,6 +100,16 @@ const ImageUpload = ({ setCurrentStep, setComplete }) => {
           </>
         )}
       </label>
+      {imageURL && (
+        <div className=" my-10 flex justify-center items-center">
+          <button
+            className="btn mt-2 bg-gradient-to-r from-pink-500 to-violet-500 rounded-lg px-2 py-1"
+            onClick={handleDownload}
+          >
+            Download
+          </button>
+        </div>
+      )}
     </div>
   );
 };
