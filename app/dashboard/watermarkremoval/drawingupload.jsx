@@ -1,7 +1,7 @@
 "use client";
 import React, { useRef, useState } from "react";
 
-const DrawingCanvasTest = () => {
+const DrawingCanvas = () => {
   const canvasRef = useRef();
   const [imageUrl, setImageUrl] = useState(null);
   const [drawing, setDrawing] = useState(false);
@@ -112,34 +112,68 @@ const DrawingCanvasTest = () => {
   };
 
   return (
-    <div className="">
-      <input type="file" accept="image/*" onChange={handleImageChange} />
+    <div className="my-20">
+      <label
+        htmlFor="dropzone-file"
+        className={`mx-auto cursor-pointer ${
+          imageUrl ? "hidden" : "flex"
+        } w-full max-w-lg flex-col items-center rounded-xl border-4 border-dashed border-gradient-to-br from-[#FD5261] to-[#AA26B6] p-6 text-center`}
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-10 w-10 text-[#AA26B6]"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          strokeWidth="2"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+          />
+        </svg>
+
+        <h2 className="mt-4 text-xl font-medium text-gray-400 tracking-wide">
+          Payment File
+        </h2>
+        <p className="mt-2 text-gray-500 tracking-wide">
+          Upload or drag & drop your file SVG, PNG, JPG, or GIF.
+        </p>
+
+        <input
+          id="dropzone-file"
+          type="file"
+          className="hidden"
+          accept="image/*"
+          onChange={handleImageChange}
+        />
+      </label>
+
       {imageUrl && (
-        <div className="border-2 border-pink-500 relative">
+        <div className="border-4 border-dashed border-gradient-to-br from-[#FD5261] to-[#AA26B6] p-6 w-fit h-fit flex flex-col justify-center items-center mx-auto">
           <canvas
             ref={canvasRef}
             width={800}
             height={600}
-            style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              border: "1px solid #000",
-            }}
             onMouseDown={(e) => handleCanvasDrawStart(e)}
             onMouseMove={(e) => handleCanvasDrawMove(e)}
             onMouseUp={handleCanvasDrawEnd}
             onMouseLeave={handleCanvasDrawEnd}
           />
+
+          <div className=" my-10 flex justify-center items-center">
+            <button
+              className="btn mt-2 bg-gradient-to-r from-pink-500 to-violet-500 rounded-lg px-2 py-1"
+              onClick={handleSaveImage}
+            >
+              Download
+            </button>
+          </div>
         </div>
       )}
-      <div>
-        <button className="bg-red-400 p-2 rounded-lg" onClick={handleSaveImage}>
-          Save
-        </button>
-      </div>
     </div>
   );
 };
 
-export default DrawingCanvasTest;
+export default DrawingCanvas;

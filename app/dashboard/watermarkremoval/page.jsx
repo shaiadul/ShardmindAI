@@ -1,12 +1,12 @@
 import React from "react";
-import DrawingCanvasTest from "../components/drawingcanvas";
+import StepsWaterMark from "./stepswateratermark";
 
 const page = () => {
   return (
     <section className="md:mx-5 my-10">
       <div className="flex justify-center">
         <span className="text-2xl md:text-4xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-[#FD5261] to-[#AA26B6]">
-          Object Background
+          Object Removal
         </span>
       </div>
 
@@ -15,7 +15,7 @@ const page = () => {
           How to Use
         </p>
       </div>
-      <DrawingCanvasTest />
+      <StepsWaterMark />
     </section>
   );
 };
