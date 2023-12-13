@@ -167,7 +167,7 @@ const DrawingCanvas = () => {
               className="btn mt-2 bg-gradient-to-r from-pink-500 to-violet-500 rounded-lg px-2 py-1"
               onClick={handleSaveImage}
             >
-              Download
+              Save Image
             </button>
           </div>
         </div>
