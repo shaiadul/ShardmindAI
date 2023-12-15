@@ -1,8 +1,62 @@
+"use client";
 import Animation from "@/components/animation";
+import { signIn, useSession } from "next-auth/react";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const SignIn = () => {
+  const { data: session } = useSession();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleSignIn = async () => {
+    try {
+      const response = await fetch(
+        "https://api.shardmind.io/api/v1/auth/user/signin",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: email,
+            password: password,
+          }),
+        }
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        localStorage.setItem("token", data.accessToken);
+        toast.success("Successfully logged", {
+          theme: "dark",
+        });
+      } else {
+        const errorData = await response.json();
+        toast.error("Please check information", {
+          theme: "dark",
+        });
+      }
+
+      if (localStorage.getItem("token")) {
+        window.location.href = "/dashboard/personalfeed";
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  const toggleShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
+  if (session) {
+    window.location.href = "/dashboard/personalfeed";
+    return null;
+  }
   return (
     <section className="container mx-auto">
       <div className="bg-[#b14bf4] absolute top-0 left-0 bg-gradient-to-tl from-gray-900 via-gray-900 to-[#b14bf4] bottom-0 leading-5 h-full w-full overflow-hidden"></div>
@@ -37,31 +91,43 @@ const SignIn = () => {
             <div className="space-y-6 text-gray-400">
               <div className="">
                 <input
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   className=" w-full text-sm  px-4 py-3 bg-gray-200 focus:bg-gray-100 border  border-gray-200 rounded-lg focus:outline-none focus:border-[#b14bf4] transition-colors"
-                  type=""
+                  type="email"
                   placeholder="Email"
                 />
               </div>
 
               <div className="relative" x-data="{ show: true }">
                 <input
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   placeholder="Password"
-                  type="show ? 'password' : 'text'"
+                  type={showPassword ? "text" : "password"}
                   className="text-sm px-4 py-3 rounded-lg w-full bg-gray-200 focus:bg-gray-100 border border-gray-200 focus:outline-none focus:border-purple-400"
                 />
-                <div className="flex items-center absolute inset-y-0 right-0 mr-3  text-sm leading-5">show</div>
+                <div
+                  onClick={toggleShowPassword}
+                  className="flex items-center absolute inset-y-0 right-0 mr-3  text-sm leading-5"
+                >
+                  {showPassword ? "hide" : "show"}
+                </div>
               </div>
 
               <div className="flex items-center justify-between">
                 <div className="text-sm ml-auto">
-                  <a href="#" className="text-[#b14bf4] hover:opacity-75">
+                  <Link
+                    href="/authentication/forgotpassword"
+                    className="text-[#b14bf4] hover:opacity-75"
+                  >
                     Forgot your password?
-                  </a>
+                  </Link>
                 </div>
               </div>
               <div>
                 <button
-                  type="submit"
+                  onClick={handleSignIn}
                   className="w-full flex justify-center bg-purple-800  hover:bg-purple-700 text-gray-100 p-3  rounded-lg tracking-wide font-semibold  cursor-pointer transition ease-in duration-500"
                 >
                   Sign in
@@ -74,7 +140,7 @@ const SignIn = () => {
               </div>
               <div className="flex justify-center gap-5 w-full ">
                 <button
-                  type="submit"
+                  onClick={() => signIn("google")}
                   className="w-full flex items-center justify-center mb-6 md:mb-0 border border-gray-300 hover:bg-gray-600 text-sm text-gray-500 p-3  rounded-lg tracking-wide font-medium  cursor-pointer transition ease-in duration-500"
                 >
                   <svg
@@ -121,6 +187,7 @@ const SignIn = () => {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </section>
   );
 };

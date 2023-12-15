@@ -1,7 +1,7 @@
 "use client";
 import { faBitcoin } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import React, { useState } from "react";
 
@@ -53,16 +53,32 @@ const HeaderDashboard = () => {
                 <div className="bg-gradient-to-r from-pink-500 to-violet-500 absolute right-0 my-5 p-3 rounded-md flex flex-col justify-center items-center mx-auto">
                   <img
                     className="w-10 h-10 rounded-full"
-                    src={user?.image}
+                    src={user?.image || "https://i.ibb.co/QcK63FR/1.jpg"}
                     alt=""
                   />
 
                   <p className="text-sm lg:text-md font-semibold text-white">
-                    {user?.name}
+                    {user?.name || "Gust User"}
                   </p>
                   <p className="text-xs lg:text-sm text-gray-300">
-                    {user?.email}
+                    {user?.email || "example.gmail.com"}
                   </p>
+                  {
+                    session ? (
+                      <button
+                        onClick={() => signOut()}
+                        className="bg-violet-500 text-white uppercase text-sm px-2 py-1 rounded-md mt-2"
+                      >
+                        Sign Out
+                      </button>
+                    ) : (
+                      <Link href="/authentication/signin">
+                        <button className="bg-violet-500 text-white uppercase text-sm px-2 py-1 rounded-md mt-2">
+                          Sign In
+                        </button>
+                      </Link>
+                    )
+                  }
                 </div>
               )}
             </div>

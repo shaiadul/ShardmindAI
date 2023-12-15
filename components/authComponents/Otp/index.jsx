@@ -1,10 +1,13 @@
 "use client";
 import Animation from "@/components/animation";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const OtpVerify = () => {
   const [otpValues, setOtpValues] = useState(["", "", "", ""]);
   const inputRefs = [useRef(null), useRef(null), useRef(null), useRef(null)];
+  const [otp, setOtp] = useState("");
 
   const handleOtpChange = (index, value) => {
     // Update the OTP value
@@ -16,10 +19,116 @@ const OtpVerify = () => {
     if (index < inputRefs.length - 1 && value !== "") {
       inputRefs[index + 1].current.focus();
     }
+
+    // Log the 4-digit OTP value to the console
+    const otpString = newOtpValues.join("");
+    if (otpString.length === 4) {
+      setOtp(otpString);
+    }
   };
+
+  const verifyOtp = async () => {
+    try {
+      const email = localStorage.getItem("email");
+      const response = await fetch(
+        "https://api.shardmind.io/api/v1/auth/otp/verify",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: email,
+            otp: otp,
+          }),
+        }
+      );
+
+      if (response.ok) {
+        toast.error(`OTP verification successful !`, {
+          theme: "dark",
+        });
+        window.location.href = "/authentication/signin";
+      } else {
+        toast.error(`Please input valid otp !`, {
+          theme: "dark",
+        });
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  const resendOtp = async () => {
+    try {
+      const email = localStorage.getItem("email");
+      const response = await fetch(
+        "https://api.shardmind.io/api/v1/auth/otp/resend",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: email,
+          }),
+        }
+      );
+
+      if (response.ok) {
+        toast.success(`OTP resend successful !`, {
+          theme: "dark",
+        });
+      } else {
+        toast.error(`Something went wrong !`, {
+          theme: "dark",
+        });
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  const expireOtp = async () => {
+    try {
+      const email = localStorage.getItem("email");
+      const response = await fetch(
+        "https://api.shardmind.io/api/v1/auth/otp/expire",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: email,
+          }),
+        }
+      );
+
+      if (response.ok) {
+        toast(`OTP expired, click resent !`, {
+          theme: "dark",
+        });
+      } else {
+        toast.error(`Something went wrong !`, {
+          theme: "dark",
+        });
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+  useEffect(() => {
+    expireOtp();
+
+    const intervalId = setInterval(expireOtp, 2 * 60 * 1000);
+
+    return () => clearInterval(intervalId);
+  }, []);
+
   return (
     <section className="container mx-auto">
-      <div className="bg-[#b14bf4] absolute top-0 left-0 bg-gradient-to-tl from-gray-900 via-gray-900 to-[#b14bf4] bottom-0 leading-5 h-full w-full overflow-hidden"></div>
+      <div className="absolute top-0 left-0 bg-gradient-to-tl from-gray-900 via-gray-900 to-[#b14bf4] bottom-0 leading-5 h-full w-full overflow-hidden"></div>
       <Animation />
       <div className="relative min-h-screen sm:flex sm:flex-row justify-center bg-transparent p-3">
         <div className="flex justify-center items-center self-center z-10 mt-[50%] md:mt-0 lg:mt-0 xl:mt-0">
@@ -34,7 +143,7 @@ const OtpVerify = () => {
                   mailto="mailto:example@gmail.com"
                   className="text-sm text-[#b14bf4] hover:opacity-75"
                 >
-                  example@gmail.com
+                  {localStorage.getItem("email") || "example@gmail.com"}
                 </a>
               </p>
             </div>
@@ -58,20 +167,18 @@ const OtpVerify = () => {
               <div className="mt-10">
                 <span>
                   Did not recieve code?
-                  <a
-                    href="#"
-                    rel=""
-                    target="_blank"
-                    className="text-[#b14bf4] hover:opacity-75 pl-1"
+                  <span
+                    onClick={resendOtp}
+                    className="text-[#b14bf4] hover:opacity-75 pl-1 cursor-pointer"
                   >
                     Resend
-                  </a>
+                  </span>
                 </span>
               </div>
 
               <div>
                 <button
-                  type="submit"
+                  onClick={verifyOtp}
                   className="w-full flex justify-center bg-purple-800  hover:bg-purple-700 text-gray-100 p-3  rounded-lg tracking-wide font-semibold  cursor-pointer transition ease-in duration-500"
                 >
                   Confirm
@@ -95,6 +202,7 @@ const OtpVerify = () => {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </section>
   );
 };
