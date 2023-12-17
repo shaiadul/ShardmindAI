@@ -2,6 +2,9 @@ import React from "react";
 import Offering from "./OfferingCard";
 
 const page = () => {
+
+  
+
   const preimages = [
     "https://source.unsplash.com/random/300x300/?1",
     "https://source.unsplash.com/random/300x300/?2",

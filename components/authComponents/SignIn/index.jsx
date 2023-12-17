@@ -31,12 +31,13 @@ const SignIn = () => {
       if (response.ok) {
         const data = await response.json();
         localStorage.setItem("token", data.accessToken);
-        toast.success("Successfully logged", {
+        localStorage.setItem("email", email);
+        toast("Successfully logged", {
           theme: "dark",
         });
       } else {
         const errorData = await response.json();
-        toast.error("Please check information", {
+        toast("Please check information", {
           theme: "dark",
         });
       }

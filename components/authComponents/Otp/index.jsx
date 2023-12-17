@@ -8,6 +8,7 @@ const OtpVerify = () => {
   const [otpValues, setOtpValues] = useState(["", "", "", ""]);
   const inputRefs = [useRef(null), useRef(null), useRef(null), useRef(null)];
   const [otp, setOtp] = useState("");
+  const [componentMounted, setComponentMounted] = useState(false);
 
   const handleOtpChange = (index, value) => {
     // Update the OTP value
@@ -76,11 +77,11 @@ const OtpVerify = () => {
       );
 
       if (response.ok) {
-        toast.success(`OTP resend successful !`, {
+        toast(`OTP resend successful !`, {
           theme: "dark",
         });
       } else {
-        toast.error(`Something went wrong !`, {
+        toast(`Something went wrong !`, {
           theme: "dark",
         });
       }
@@ -92,39 +93,48 @@ const OtpVerify = () => {
   const expireOtp = async () => {
     try {
       const email = localStorage.getItem("email");
-      const response = await fetch(
-        "https://api.shardmind.io/api/v1/auth/otp/expire",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email: email,
-          }),
-        }
-      );
 
-      if (response.ok) {
-        toast(`OTP expired, click resent !`, {
-          theme: "dark",
-        });
-      } else {
-        toast.error(`Something went wrong !`, {
-          theme: "dark",
-        });
+      // Check if email exists before making the API call
+      if (email) {
+        const response = await fetch(
+          "https://api.shardmind.io/api/v1/auth/otp/expire",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              email: email,
+            }),
+          }
+        );
+
+        if (response.ok) {
+          toast(`OTP expired, click resent !`, {
+            theme: "dark",
+          });
+        } else {
+          toast(`Something went wrong !`, {
+            theme: "dark",
+          });
+        }
       }
     } catch (error) {
       console.error("Error:", error);
     }
   };
+
   useEffect(() => {
-    expireOtp();
+    setComponentMounted(true);
 
-    const intervalId = setInterval(expireOtp, 2 * 60 * 1000);
+    if (componentMounted) {
+      expireOtp();
 
-    return () => clearInterval(intervalId);
-  }, []);
+      const intervalId = setInterval(expireOtp, 2 * 60 * 1000);
+
+      return () => clearInterval(intervalId);
+    }
+  }, [componentMounted]);
 
   return (
     <section className="container mx-auto">

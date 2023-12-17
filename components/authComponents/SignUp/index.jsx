@@ -32,13 +32,14 @@ const SignUp = () => {
         }
       );
       if (response.ok) {
-        toast.success("Please check your email", {
+        toast("Please check your email", {
           theme: "dark",
         });
         localStorage.setItem("email", email);
+        localStorage.setItem("username", username)
         window.location.href = "/authentication/otp";
       } else {
-        toast.error(`Something went wrong!`, {
+        toast(`Something went wrong!`, {
           theme: "dark",
         });
       }

@@ -1,9 +1,10 @@
 "use client";
 
 export default function Home() {
-  if (window.location.pathname === "/") {
-    window.location.href = "/dashboard/personalfeed";
-  }
+  if (localStorage.getItem("token") === null)
+    window.location.replace("/authentication/signin");
+
+  window.location.replace("/authentication/signin");
 
   return <main></main>;
 }
