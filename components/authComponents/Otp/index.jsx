@@ -90,12 +90,17 @@ const OtpVerify = () => {
     }
   };
 
-  const expireOtp = async () => {
-    try {
-      const email = localStorage.getItem("email");
+const expireOtp = async () => {
+  try {
+    const email = localStorage.getItem("email");
 
-      // Check if email exists before making the API call
-      if (email) {
+    // Check if email exists before making the API call
+    if (email) {
+      const lastCallTime = localStorage.getItem("lastCallTime");
+      const currentTime = new Date().getTime();
+
+      // Check if at least 2 minutes have passed since the last call
+      if (!lastCallTime || currentTime - lastCallTime > 2 * 60 * 1000) {
         const response = await fetch(
           "https://api.shardmind.io/api/v1/auth/otp/expire",
           {
@@ -110,31 +115,36 @@ const OtpVerify = () => {
         );
 
         if (response.ok) {
-          toast(`OTP expired, click resent !`, {
+          toast(`OTP expired, click resent!`, {
             theme: "dark",
           });
+
+          // Update the last call time in localStorage
+          localStorage.setItem("lastCallTime", currentTime);
         } else {
-          toast(`Something went wrong !`, {
+          toast(`Something went wrong!`, {
             theme: "dark",
           });
         }
       }
-    } catch (error) {
-      console.error("Error:", error);
     }
-  };
+  } catch (error) {
+    console.error("Error:", error);
+  }
+};
 
-  useEffect(() => {
-    setComponentMounted(true);
+useEffect(() => {
+  setComponentMounted(true);
 
-    if (componentMounted) {
-      expireOtp();
+  if (componentMounted) {
+    expireOtp();
 
-      const intervalId = setInterval(expireOtp, 2 * 60 * 1000);
+    const intervalId = setInterval(expireOtp, 2 * 60 * 1000);
 
-      return () => clearInterval(intervalId);
-    }
-  }, [componentMounted]);
+    return () => clearInterval(intervalId);
+  }
+}, [componentMounted]);
+
 
   return (
     <section className="container mx-auto">

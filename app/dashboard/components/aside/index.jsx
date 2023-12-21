@@ -1,3 +1,4 @@
+'use client'
 import { faImage } from "@fortawesome/free-regular-svg-icons";
 import { faHome, faWaterLadder } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -5,14 +6,27 @@ import Link from "next/link";
 import React from "react";
 
 const AsideDashboard = () => {
+
+  // const pathname = window.location.pathname;
+
+  // const isActive = (path) => {
+  //   if (path === pathname) {
+  //     return "bg-slate-600";
+  //   } else {
+  //     return "bg-transparent";
+  //   }
+  // };
+
+  // console.log(isActive('/dashboard/personalfeed'));
+
   return (
     <div className="fixed hidden md:flex flex-col top-14 left-0 w-14 hover:w-64 md:w-64 h-full transition-all duration-300 border-none z-10 sidebar ">
       <div className="overflow-y-auto overflow-x-hidden flex flex-col justify-between flex-grow ">
         <ul className="flex flex-col py-4 space-y-1">
           <li>
-            <Link
+          <Link
               href="/dashboard/personalfeed"
-              className="relative flex flex-row items-center h-11 focus:outline-none  focus-within:bg-gray-600 text-white-600 hover:text-white-800 pr-6 rounded-md"
+              className={`focus-within:bg-slate-600 relative flex flex-row items-center h-11 focus:outline-none text-white-600 hover:text-white-800 pr-6 rounded-md`}
             >
               <span className="inline-flex justify-center items-center ml-4">
                 <FontAwesomeIcon
@@ -28,7 +42,7 @@ const AsideDashboard = () => {
           <li>
             <Link
               href="/dashboard/backgroundremoval"
-              className="relative flex flex-row items-center h-11 focus:outline-none  focus-within:bg-gray-600 text-white-600 hover:text-white-800 pr-6 rounded-md"
+              className={`focus-within:bg-slate-600 relative flex flex-row items-center h-11 focus:outline-none  text-white-600 hover:text-white-800 pr-6 rounded-md`}
             >
               <span className="inline-flex justify-center items-center ml-4">
                 <FontAwesomeIcon
@@ -44,7 +58,7 @@ const AsideDashboard = () => {
           <li>
             <Link
               href="/dashboard/watermarkremoval"
-              className="relative flex flex-row items-center h-11 focus:outline-none  focus-within:bg-gray-600 text-white-600 hover:text-white-800 pr-6 rounded-md"
+              className={`focus-within:bg-slate-600 relative flex flex-row items-center h-11 focus:outline-none text-white-600 hover:text-white-800 pr-6 rounded-md`}
             >
               <span className="inline-flex justify-center items-center ml-4">
                 <FontAwesomeIcon
