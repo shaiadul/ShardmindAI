@@ -95,7 +95,7 @@ const expireOtp = async () => {
     const email = localStorage.getItem("email");
 
     // Check if email exists before making the API call
-    if (email) {
+    if (typeof window !== 'undefined') {
       const lastCallTime = localStorage.getItem("lastCallTime");
       const currentTime = new Date().getTime();
 
