@@ -3,23 +3,24 @@ import { faBitcoin } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
-import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+import React, { useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 
 const HeaderDashboard = () => {
   const [showDiv, setShowDiv] = useState(false);
+  const [userData, setUserData] = useState({ username: '', email: '' });
+
   const { data: session } = useSession();
   const user = session?.user;
+  const router = useRouter();
 
-  const username = localStorage.getItem("username");
-  const email = localStorage.getItem("email");
-
-  const userData = {
+  /* const userData = {
     username,
     email,
-  };
+  }; */
 
   const handleSignOut = async () => {
     try {
@@ -38,12 +39,20 @@ const HeaderDashboard = () => {
       toast("Successfully logged out", {
         theme: "dark",
       });
-      window.location.href = "/authentication/signin";
+      router.push("/authentication/signin");
     } catch (error) {
       console.error("Error:", error);
     }
   };
 
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const { localStorage } = window;
+      setUserData((prev) => {
+        return {...prev, username: localStorage.getItem('username'), email: localStorage.getItem('email')}
+      })
+    }
+  }, []);
 
   return (
     <div className=" w-full flex items-center justify-between h-16 fixed z-20 bg-[#0c051f]">

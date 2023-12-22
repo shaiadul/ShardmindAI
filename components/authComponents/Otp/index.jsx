@@ -1,4 +1,5 @@
 "use client";
+
 import Animation from "@/components/animation";
 import React, { useEffect, useRef, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
@@ -6,6 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 const OtpVerify = () => {
   const [otpValues, setOtpValues] = useState(["", "", "", ""]);
+  const [email, setEmail] = useState('example@gmail.com');
   const inputRefs = [useRef(null), useRef(null), useRef(null), useRef(null)];
   const [otp, setOtp] = useState("");
   const [componentMounted, setComponentMounted] = useState(false);
@@ -30,7 +32,6 @@ const OtpVerify = () => {
 
   const verifyOtp = async () => {
     try {
-      const email = localStorage.getItem("email");
       const response = await fetch(
         "https://api.shardmind.io/api/v1/auth/otp/verify",
         {
@@ -62,7 +63,6 @@ const OtpVerify = () => {
 
   const resendOtp = async () => {
     try {
-      const email = localStorage.getItem("email");
       const response = await fetch(
         "https://api.shardmind.io/api/v1/auth/otp/resend",
         {
@@ -93,7 +93,6 @@ const OtpVerify = () => {
   const expireOtp = async () => {
     try {
       if (typeof window !== 'undefined') {
-        const email = localStorage.getItem("email");
         const lastCallTime = localStorage.getItem("lastCallTime");
         const currentTime = new Date().getTime();
   
@@ -143,7 +142,12 @@ const OtpVerify = () => {
     }
   }, [componentMounted]);
   
-
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const { localStorage } = window;
+      setEmail((prev) => (prev = localStorage.getItem('email')));
+    }
+  }, []);
 
   return (
     <section className="container mx-auto">
@@ -162,7 +166,7 @@ const OtpVerify = () => {
                   mailto="mailto:example@gmail.com"
                   className="text-sm text-[#b14bf4] hover:opacity-75"
                 >
-                  {localStorage.getItem("email") || "example@gmail.com"}
+                  {email}
                 </a>
               </p>
             </div>

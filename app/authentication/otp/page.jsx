@@ -1,13 +1,12 @@
-import OtpVerify from '@/components/authComponents/Otp'
-import React, { Fragment } from 'react'
+import OtpVerify from "@/components/authComponents/Otp";
+import React from "react";
 
 const Otp = () => {
   return (
-    <Fragment>
-      {/* <OtpVerify /> */}
-      <div>Hello World</div>
-      </Fragment>
-  )
-}
+    <>
+      <OtpVerify />
+    </>
+  );
+};
 
-export default Otp
+export default Otp;

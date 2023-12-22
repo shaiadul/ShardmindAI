@@ -7,7 +7,7 @@ const layout = ({ children }) => {
   return (
     <div>
       <div className="min-h-screen flex flex-col flex-auto flex-shrink-0 antialiased bg-[#0C051F] text-white">
-        {/* <HeaderDashboard /> */}
+        <HeaderDashboard />
         <AsideDashboard />
         <div className="h-auto my-20 md:ml-64">{children}</div>
         <BottomNav />
