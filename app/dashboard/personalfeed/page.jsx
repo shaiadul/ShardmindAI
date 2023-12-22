@@ -1,7 +1,7 @@
 import React from "react";
-import Offering from "./OfferingCard";
+import Offering from "./components/OfferingCard";
 
-const page = () => {
+const PersonalFeed = () => {
 
   
 
@@ -62,4 +62,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default PersonalFeed;

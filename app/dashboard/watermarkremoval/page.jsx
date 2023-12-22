@@ -1,7 +1,7 @@
 import React from "react";
-import StepsWaterMark from "./stepswateratermark";
+import StepsWaterMark from "./components/stepswateratermark"
 
-const page = () => {
+const WatermarkRemoval = () => {
   return (
     <section className="md:mx-5 my-10">
       <div className="flex justify-center">
@@ -20,4 +20,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default WatermarkRemoval;
