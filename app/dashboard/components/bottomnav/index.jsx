@@ -29,12 +29,12 @@ const BottomNav = () => {
           className="text-[#C61FA2] w-8 h-8 hover_icon"
         />
       </Link>
-      <Link href="/dashboard/personalfeed" className="bloc-icon">
+      {/* <Link href="/dashboard/personalfeed" className="bloc-icon">
         <FontAwesomeIcon
           icon={faImage}
           className="text-[#C61FA2] w-8 h-8 hover_icon"
         />
-      </Link>
+      </Link> */}
     </nav>
   );
 };

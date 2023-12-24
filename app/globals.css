@@ -172,9 +172,17 @@ div .dot {
   align-items: center;
   padding: 5px;
 }
-.bloc-icon:hover {
-  animation: bounce 0.5s;
-  animation-duration: 3s;
+.hover_icon {
+  padding: 5px;
+}
+
+.hover_icon:hover {
+  background-color: whitesmoke;
+  border-radius: 50%;
+  border: 6px solid #0c051f;
+  transition: 0.5s;
+  transform: scale3d(1.2, 1.2, 1);
+  margin-bottom: 20px;
 }
 @media screen and (min-width: 600px) {
   .mobile-nav {
