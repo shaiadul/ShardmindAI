@@ -37,7 +37,7 @@ const SignIn = () => {
         });
       } else {
         const errorData = await response.json();
-        toast("Please check information", {
+        toast("Enter your valid email and password", {
           theme: "dark",
         });
       }

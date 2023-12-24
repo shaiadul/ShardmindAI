@@ -1,8 +1,20 @@
+"use client";
 import React from "react";
 import Offering from "./components/OfferingCard";
+import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 const PersonalFeed = () => {
+  const router = useRouter();
+  const { data: session } = useSession();
+  const user = session?.user;
 
+  if (typeof window !== "undefined") {
+   const guard = localStorage.getItem("token") 
+    if (!guard) {
+      router.push("/authentication/signin");
+    }
+  }
   
 
   const preimages = [

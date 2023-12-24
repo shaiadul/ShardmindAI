@@ -1,7 +1,17 @@
+"use client";
 import React from "react";
 import StepsWaterMark from "./components/stepswateratermark"
+import { useRouter } from "next/navigation";
 
 const WatermarkRemoval = () => {
+  const router = useRouter();
+
+  if (typeof window !== "undefined") {
+   const guard = localStorage.getItem("token") 
+    if (!guard) {
+      router.push("/authentication/signin");
+    }
+  }
   return (
     <section className="md:mx-5 my-10">
       <div className="flex justify-center">

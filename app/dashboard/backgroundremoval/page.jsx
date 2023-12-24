@@ -1,7 +1,16 @@
-
+"use client";
+import { useRouter } from "next/navigation";
 import Steps from "./Steps";
 
-const page = () => {
+const Page = () => {
+  const router = useRouter();
+
+  if (typeof window !== "undefined") {
+   const guard = localStorage.getItem("token") 
+    if (!guard) {
+      router.push("/authentication/signin");
+    }
+  }
   return (
     <section className="md:mx-5 my-10">
       <div className="flex justify-center">
@@ -21,4 +30,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

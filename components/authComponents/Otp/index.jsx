@@ -7,7 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 const OtpVerify = () => {
   const [otpValues, setOtpValues] = useState(["", "", "", ""]);
-  const [email, setEmail] = useState('example@gmail.com');
+  const [email, setEmail] = useState("example@gmail.com");
   const inputRefs = [useRef(null), useRef(null), useRef(null), useRef(null)];
   const [otp, setOtp] = useState("");
   const [componentMounted, setComponentMounted] = useState(false);
@@ -92,10 +92,10 @@ const OtpVerify = () => {
 
   const expireOtp = async () => {
     try {
-      if (typeof window !== 'undefined') {
+      if (typeof window !== "undefined") {
         const lastCallTime = localStorage.getItem("lastCallTime");
         const currentTime = new Date().getTime();
-  
+
         // Check if at least 2 minutes have passed since the last call
         if (!lastCallTime || currentTime - lastCallTime > 2 * 60 * 1000) {
           const response = await fetch(
@@ -110,14 +110,16 @@ const OtpVerify = () => {
               }),
             }
           );
-  
+
           if (response.ok) {
             toast(`OTP expired, click resent!`, {
               theme: "dark",
             });
-  
+
             // Update the last call time in localStorage
             localStorage.setItem("lastCallTime", currentTime);
+            // Schedule the next call after 2 minutes
+            setTimeout(expireOtp, 2 * 60 * 1000);
           } else {
             toast(`Something went wrong!`, {
               theme: "dark",
@@ -129,23 +131,23 @@ const OtpVerify = () => {
       console.error("Error:", error);
     }
   };
-  
+
   useEffect(() => {
     setComponentMounted(true);
-  
+
     if (componentMounted) {
       expireOtp();
-  
+
       const intervalId = setInterval(expireOtp, 2 * 60 * 1000);
-  
+
       return () => clearInterval(intervalId);
     }
   }, [componentMounted]);
-  
+
   useEffect(() => {
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       const { localStorage } = window;
-      setEmail((prev) => (prev = localStorage.getItem('email')));
+      setEmail((prev) => (prev = localStorage.getItem("email")));
     }
   }, []);
 
