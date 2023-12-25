@@ -1,5 +1,5 @@
 "use client";
-import { faBitcoin, faSalesforce } from "@fortawesome/free-brands-svg-icons";
+import { faBitcoin, faNfcDirectional, faSalesforce } from "@fortawesome/free-brands-svg-icons";
 import {
   faFaceGrinHearts,
   faGear,
@@ -79,8 +79,8 @@ const HeaderDashboard = () => {
         <ul className="flex items-center">
           <li className="flex justify-center items-center">
             <FontAwesomeIcon
-              icon={faBitcoin}
-              className="text-[#ec58f6] w-5 h-5"
+              icon={faNfcDirectional}
+              className="text-[#ec58f6] w-5 h-5 mr-1"
             />
             <span className="ml-1 text-sm lg:text-lg">250</span>
           </li>
