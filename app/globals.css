@@ -12,6 +12,12 @@ body {
   border-image-slice: 1;
   border-width: 5px;
 }
+.border_gradient {
+  border: 3px solid;
+  border-image-source: linear-gradient(to left, #743ad5, #d53a9d);
+  border-image-slice: 1;
+}
+
 
 
 /* background animation */

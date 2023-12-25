@@ -1,5 +1,13 @@
 "use client";
-import { faBitcoin } from "@fortawesome/free-brands-svg-icons";
+import { faBitcoin, faSalesforce } from "@fortawesome/free-brands-svg-icons";
+import {
+  faFaceGrinHearts,
+  faGear,
+  faQuestion,
+  faSignIn,
+  faSignOut,
+  faSignOutAlt,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
@@ -8,10 +16,9 @@ import React, { useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-
 const HeaderDashboard = () => {
   const [showDiv, setShowDiv] = useState(false);
-  const [userData, setUserData] = useState({ username: '', email: '' });
+  const [userData, setUserData] = useState({ username: "", email: "" });
 
   const { data: session } = useSession();
   const user = session?.user;
@@ -46,11 +53,15 @@ const HeaderDashboard = () => {
   };
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       const { localStorage } = window;
       setUserData((prev) => {
-        return {...prev, username: localStorage.getItem('username'), email: localStorage.getItem('email')}
-      })
+        return {
+          ...prev,
+          username: localStorage.getItem("username"),
+          email: localStorage.getItem("email"),
+        };
+      });
     }
   }, []);
 
@@ -107,30 +118,53 @@ const HeaderDashboard = () => {
                   <p className="text-xs lg:text-sm text-gray-300">
                     {user?.email || userData?.email}
                   </p>
-                  {userData ? (
-                    <>
-                      <button
-                        onClick={handleSignOut}
-                        className={`${session ? 'hidden' : 'block'} bg-violet-500 text-white uppercase text-sm px-2 py-1 rounded-md mt-2`}
-                      >
-                        Sign Out
-                      </button>
-                      <button
-                        onClick={() => signOut()}
-                        className={`${
-                          session ? "block" : "hidden"
-                        } bg-violet-500 text-white uppercase text-sm px-2 py-1 rounded-md mt-2`}
-                      >
-                        Sign Out
-                      </button>
-                    </>
-                  ) : (
-                    <Link href="/authentication/signin">
-                      <button className="bg-violet-500 text-white uppercase text-sm px-2 py-1 rounded-md mt-2">
-                        Sign In
-                      </button>
-                    </Link>
-                  )}
+                  <div className="flex flex-col justify-center items-center ">
+                    {userData ? (
+                      <>
+                        <button
+                          onClick={handleSignOut}
+                          className={`${
+                            session ? "hidden" : "block"
+                          } group bg-gradient-to-r from-pink-500 to-violet-500 hover:bg-gradient-to-l duration-500 text-white uppercase text-sm px-2 py-1 rounded-md mt-2 w-full`}
+                        >
+                          <FontAwesomeIcon
+                            icon={faSignOut}
+                            className="group-hover:text-pink-500 w-5 h-5 mr-1"
+                          />
+                           Sign Out
+                        </button>
+                        <button
+                          onClick={() => signOut()}
+                          className={`${
+                            session ? "block" : "hidden"
+                          } group bg-gradient-to-r from-pink-500 to-violet-500 hover:bg-gradient-to-l duration-500 text-white uppercase text-sm px-2 py-1 rounded-md mt-2 w-full`}
+                        >
+                          <FontAwesomeIcon
+                            icon={faSignOut}
+                            className="group-hover:text-pink-500 w-5 h-5 mr-1"
+                          />
+                           Sign Out
+                        </button>
+                      </>
+                    ) : (
+                      <Link href="/authentication/signin">
+                        <button className="group bg-gradient-to-r from-pink-500 to-violet-500 hover:bg-gradient-to-l duration-500 text-white uppercase text-sm px-2 py-1 rounded-md mt-2 w-full">
+                          <FontAwesomeIcon
+                            icon={faSignIn}
+                            className="group-hover:text-pink-500 w-5 h-5 mr-1"
+                          />
+                          Sign In
+                        </button>
+                      </Link>
+                    )}
+
+                    <button className="group bg-gradient-to-r from-pink-500 to-violet-500 hover:bg-gradient-to-l duration-500 text-white uppercase text-sm px-2 py-1 rounded-md mt-2 w-full">
+                      <FontAwesomeIcon icon={faQuestion} className="group-hover:text-pink-500 w-5 h-5" /> FAQ & Support
+                    </button>
+                    <button className="group bg-gradient-to-r from-pink-500 to-violet-500 hover:bg-gradient-to-l duration-500 text-white uppercase text-sm px-2 py-1 rounded-md mt-2 w-full">
+                      <FontAwesomeIcon icon={faGear} className="group-hover:text-pink-500 w-5 h-5" /> FAQ & Support
+                    </button>
+                  </div>
                 </div>
               )}
             </div>
