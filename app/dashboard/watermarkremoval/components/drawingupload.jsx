@@ -5,8 +5,6 @@ const DrawingCanvas = () => {
   const canvasRef = useRef();
   const [imageUrl, setImageUrl] = useState(null);
   const [drawing, setDrawing] = useState(false);
-  const [boxes, setBoxes] = useState([]);
-  const [currentBox, setCurrentBox] = useState(null);
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
@@ -19,19 +17,70 @@ const DrawingCanvas = () => {
     }
   };
 
+  const handleSaveImage = async () => {
+    const canvas = canvasRef.current;
+    const base64Image = canvas.toDataURL("image/png");
+
+    try {
+      console.log("Uploading image to ImgBB...");
+      const response = await uploadImageToImgBB(base64Image);
+      console.log("Image hosted on ImgBB:", response.data.url);
+      // Now you can use the hosted image URL as needed
+    } catch (error) {
+      console.error("Error uploading image to ImgBB:", error);
+      // Handle error if needed
+    }
+  };
+
+  const uploadImageToImgBB = async (base64Image) => {
+    const blob = await fetch(base64Image).then((res) => res.blob());
+
+    const formData = new FormData();
+    formData.append("image", blob);
+
+    try {
+      const response = await fetch(
+        "https://api.imgbb.com/1/upload?key=7a0f43e157252e0ca3031dea1d8dcccd",
+        {
+          method: "POST",
+          body: formData,
+          headers: {
+            Accept: "application/json",
+          },
+        }
+      );
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error("ImgBB API Error:", errorData);
+        throw new Error(`Image upload failed: ${errorData.error.message}`);
+      }
+
+      return response.json();
+    } catch (error) {
+      console.error("ImgBB API Error (Catch Block):", error);
+      throw error;
+    }
+  };
+
   const handleCanvasDraw = (context, e) => {
-    context.strokeStyle = "#7FFF7F";
-    context.lineWidth = 2;
-    context.lineCap = "round";
+    // Customize drawing functionality here
+    // Example: Draw a solid line with a green color
+    context.strokeStyle = "teal";
+    context.lineWidth = 4; // Set the line width (adjust as needed)
+    context.lineCap = "round"; // Set the line cap style to round
 
     if (!drawing) {
+      // Move to the starting point if not already drawing
       context.beginPath();
       context.moveTo(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
     } else {
+      // Draw a line to the current point
       context.lineTo(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
       context.stroke();
     }
 
+    // Update the drawing state
     setDrawing(true);
   };
 
@@ -39,11 +88,13 @@ const DrawingCanvas = () => {
     const canvas = canvasRef.current;
     const context = canvas.getContext("2d");
 
+    // Draw the background image
     const image = new Image();
     image.src = imageUrl;
     image.onload = () => {
       context.drawImage(image, 0, 0, canvas.width, canvas.height);
 
+      // Start drawing on top of the background image
       setDrawing(true);
       handleCanvasDraw(context, e);
     };
@@ -58,51 +109,6 @@ const DrawingCanvas = () => {
 
   const handleCanvasDrawEnd = () => {
     setDrawing(false);
-  };
-
-  const handleEnableBox = () => {
-    setDrawing(false);
-    setCurrentBox(null); // Reset current box when enabling box mode
-  };
-
-  const handleBoxStart = (e) => {
-    setCurrentBox({ startX: e.nativeEvent.offsetX, startY: e.nativeEvent.offsetY });
-  };
-
-  const handleBoxDraw = (e) => {
-    if (currentBox) {
-      const canvas = canvasRef.current;
-      const context = canvas.getContext("2d");
-
-      const { startX, startY } = currentBox;
-      const endX = e.nativeEvent.offsetX;
-      const endY = e.nativeEvent.offsetY;
-
-      context.clearRect(0, 0, canvas.width, canvas.height);
-      context.drawImage(new Image(), 0, 0, canvas.width, canvas.height);
-
-      // Draw existing boxes
-      boxes.forEach((box) => {
-        drawBoundingBox(context, box.startX, box.startY, box.endX, box.endY);
-      });
-
-      // Draw the current box
-      drawBoundingBox(context, startX, startY, endX, endY);
-    }
-  };
-
-  const handleBoxEnd = () => {
-    if (currentBox) {
-      setBoxes([...boxes, currentBox]);
-      setCurrentBox(null);
-      setDrawing(true);
-    }
-  };
-
-  const drawBoundingBox = (context, startX, startY, endX, endY) => {
-    context.strokeStyle = "#FF0000";
-    context.lineWidth = 2;
-    context.strokeRect(startX, startY, endX - startX, endY - startY);
   };
 
   return (
@@ -145,15 +151,15 @@ const DrawingCanvas = () => {
       </label>
 
       {imageUrl && (
-        <div className="border-4 border-dashed border-gradient-to-br from-[#FD5261] to-[#AA26B6] p-6 w-fit h-fit flex flex-col justify-center items-center mx-auto cursor-crosshair">
+        <div className="border-4 border-dashed border-gradient-to-br from-[#FD5261] to-[#AA26B6] p-6 w-fit h-fit flex flex-col justify-center items-center mx-auto">
           <canvas
             ref={canvasRef}
             width={800}
             height={600}
-            onMouseDown={(e) => (drawing ? handleCanvasDrawStart(e) : handleBoxStart(e))}
-            onMouseMove={(e) => (drawing ? handleCanvasDrawMove(e) : handleBoxDraw(e))}
-            onMouseUp={drawing ? handleCanvasDrawEnd : handleBoxEnd}
-            onMouseLeave={drawing ? handleCanvasDrawEnd : handleBoxEnd}
+            onMouseDown={(e) => handleCanvasDrawStart(e)}
+            onMouseMove={(e) => handleCanvasDrawMove(e)}
+            onMouseUp={handleCanvasDrawEnd}
+            onMouseLeave={handleCanvasDrawEnd}
           />
 
           <div className=" my-10 flex justify-center items-center">
@@ -163,10 +169,13 @@ const DrawingCanvas = () => {
             >
               Save Image
             </button>
-            <button
-              className="btn mt-2 bg-gradient-to-r from-pink-500 to-violet-500 rounded-lg px-2 py-1 ml-3"
-              onClick={handleEnableBox}
-            >
+            {/* <button>
+              <a href={imageUrl} download="image.png">
+                Download Image
+              </a>
+            </button> */}
+
+            <button className="btn mt-2 ml-4 bg-gradient-to-r from-pink-500 to-violet-500 rounded-lg px-2 py-1">
               Enable Box
             </button>
           </div>
@@ -177,13 +186,6 @@ const DrawingCanvas = () => {
 };
 
 export default DrawingCanvas;
-
-
-
-
-
-
-
 
 // const uploadImageToImgBB = async (base64Image) => {
 //   const blob = await fetch(base64Image).then((res) => res.blob());
