@@ -56,7 +56,7 @@ const ImageUpload = ({ setCurrentStep, setComplete }) => {
     <div className="font-sans my-20">
       <label
         htmlFor="dropzone-file"
-        className="mx-auto cursor-pointer flex w-full max-w-lg flex-col items-center rounded-xl border-4 border-dashed border-gradient-to-br from-[#FD5261] to-[#AA26B6] p-6 text-center"
+        className="mx-auto cursor-pointer flex w-full max-w-lg flex-col items-center rounded-xl border_gradient_purple p-6 text-center"
       >
         {imageURL ? (
           <>

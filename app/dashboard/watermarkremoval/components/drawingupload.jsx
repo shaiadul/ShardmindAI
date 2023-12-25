@@ -149,7 +149,7 @@ const DrawingCanvas = () => {
         htmlFor="dropzone-file"
         className={`mx-auto cursor-pointer ${
           imageUrl ? "hidden" : "flex"
-        } w-full max-w-lg flex-col items-center rounded-xl border-4 border-dashed border-gradient-to-br from-[#FD5261] to-[#AA26B6] p-6 text-center`}
+        } w-full max-w-lg flex-col items-center rounded-xl border_gradient_purple p-6 text-center`}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -183,7 +183,7 @@ const DrawingCanvas = () => {
       </label>
 
       {imageUrl && (
-        <div className="border-4 border-dashed border-gradient-to-br from-[#FD5261] to-[#AA26B6] p-6 w-fit h-fit flex flex-col justify-center items-center mx-auto">
+        <div className="border_gradient_purple p-6 w-fit h-fit flex flex-col justify-center items-center mx-auto">
           <canvas
             ref={canvasRef}
             width={800}

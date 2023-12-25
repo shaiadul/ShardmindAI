@@ -6,6 +6,13 @@ body {
   background: #0c051f;
   color: #fff;
 }
+.border_gradient_purple {
+  border: 10px solid;
+  border-image-source: linear-gradient(to left, #743ad5, #d53a9d);
+  border-image-slice: 1;
+  border-width: 5px;
+}
+
 
 /* background animation */
 .wrapper {
