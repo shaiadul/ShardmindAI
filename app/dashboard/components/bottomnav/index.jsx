@@ -1,8 +1,7 @@
 import {
-  faBucket,
   faHome,
-  faImage,
   faVideoCamera,
+  faWaterLadder,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
@@ -25,7 +24,7 @@ const BottomNav = () => {
       </Link>
       <Link href="/dashboard/watermarkremoval" className="bloc-icon">
         <FontAwesomeIcon
-          icon={faBucket}
+          icon={faWaterLadder}
           className="text-[#C61FA2] w-8 h-8 hover_icon"
         />
       </Link>
