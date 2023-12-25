@@ -5,6 +5,8 @@ const DrawingCanvas = () => {
   const canvasRef = useRef();
   const [imageUrl, setImageUrl] = useState(null);
   const [drawing, setDrawing] = useState(false);
+  const [enableBox, setEnableBox] = useState(false);
+  const [boxStart, setBoxStart] = useState({ x: 0, y: 0 });
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
@@ -85,31 +87,61 @@ const DrawingCanvas = () => {
   };
 
   const handleCanvasDrawStart = (e) => {
-    const canvas = canvasRef.current;
-    const context = canvas.getContext("2d");
+    if (enableBox) {
+      setBoxStart({ x: e.nativeEvent.offsetX, y: e.nativeEvent.offsetY });
+      console.log(boxStart)
+    } else {
+      // Continue drawing
+      const canvas = canvasRef.current;
+      const context = canvas.getContext("2d");
 
-    // Draw the background image
-    const image = new Image();
-    image.src = imageUrl;
-    image.onload = () => {
-      context.drawImage(image, 0, 0, canvas.width, canvas.height);
+      // Draw the background image
+      const image = new Image();
+      image.src = imageUrl;
+      image.onload = () => {
+        context.drawImage(image, 0, 0, canvas.width, canvas.height);
 
-      // Start drawing on top of the background image
-      setDrawing(true);
-      handleCanvasDraw(context, e);
-    };
-  };
+        // Start drawing on top of the background image
+        setDrawing(true);
+        handleCanvasDraw(context, e);
+      };
+    }
+  }; //modified
 
   const handleCanvasDrawMove = (e) => {
-    if (!drawing) return;
-    const canvas = canvasRef.current;
-    const context = canvas.getContext("2d");
-    handleCanvasDraw(context, e);
-  };
+    if (enableBox) {
+      // Draw bounding box
+      const canvas = canvasRef.current;
+      const context = canvas.getContext("2d");
+      // Draw the background image
+      const image = new Image();
+      image.src = imageUrl;
+
+      context.clearRect(0, 0, canvas.width, canvas.height);
+
+      const boxWidth = e.nativeEvent.offsetX - boxStart.x;
+      const boxHeight = e.nativeEvent.offsetY - boxStart.y;
+
+      context.drawImage(image, 0, 0, canvas.width, canvas.height);
+      context.strokeStyle = "green";
+      context.lineWidth = 2;
+      context.strokeRect(boxStart.x, boxStart.y, boxWidth, boxHeight);
+    } else {
+      // Continue drawing
+      if (!drawing) return;
+      const canvas = canvasRef.current;
+      const context = canvas.getContext("2d");
+      handleCanvasDraw(context, e);
+    }
+  }; //modified
 
   const handleCanvasDrawEnd = () => {
-    setDrawing(false);
-  };
+    if (enableBox) {
+      setEnableBox(false);
+    } else {
+      setDrawing(false);
+    }
+  }; //modified
 
   return (
     <div className="my-20">
@@ -175,8 +207,11 @@ const DrawingCanvas = () => {
               </a>
             </button> */}
 
-            <button className="btn mt-2 ml-4 bg-gradient-to-r from-pink-500 to-violet-500 rounded-lg px-2 py-1">
-              Enable Box
+            <button
+              className="btn mt-2 ml-4 bg-gradient-to-r from-pink-500 to-violet-500 rounded-lg px-2 py-1"
+              onClick={() => setEnableBox(!enableBox)}
+            >
+              {enableBox ? "Disable Box" : "Enable Box"}
             </button>
           </div>
         </div>
