@@ -96,6 +96,7 @@ const OtpVerify = () => {
   const expireOtp = async () => {
     try {
       if (typeof window !== "undefined") {
+        const { localStorage } = window
         const lastCallTime = localStorage.getItem("lastCallTime");
         const currentTime = new Date().getTime();
 
