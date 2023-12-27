@@ -17,7 +17,7 @@ import "react-toastify/dist/ReactToastify.css";
 const HeaderDashboard = () => {
   const [showDiv, setShowDiv] = useState(false);
   const [userData, setUserData] = useState({ username: "", email: "" });
-  const { user, googleSignIn, logOut } = UserAuth();
+  const { user, logOut } = UserAuth();
   const [loading, setLoading] = useState(true);
 
   const router = useRouter();
