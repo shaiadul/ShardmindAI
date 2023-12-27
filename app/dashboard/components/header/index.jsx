@@ -1,15 +1,13 @@
 "use client";
-import { faBitcoin, faNfcDirectional, faSalesforce } from "@fortawesome/free-brands-svg-icons";
+import { UserAuth } from "@/components/authprovider/AuthContext";
+import { faNfcDirectional } from "@fortawesome/free-brands-svg-icons";
 import {
-  faFaceGrinHearts,
   faGear,
   faQuestion,
   faSignIn,
   faSignOut,
-  faSignOutAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState, useEffect } from "react";
@@ -19,15 +17,34 @@ import "react-toastify/dist/ReactToastify.css";
 const HeaderDashboard = () => {
   const [showDiv, setShowDiv] = useState(false);
   const [userData, setUserData] = useState({ username: "", email: "" });
+  const { user, googleSignIn, logOut } = UserAuth();
+  const [loading, setLoading] = useState(true);
 
-  const { data: session } = useSession();
-  const user = session?.user;
   const router = useRouter();
 
-  /* const userData = {
-    username,
-    email,
-  }; */
+ 
+
+  console.log(user);
+
+  const handleGoogleSignOut = async () => {
+    try {
+      await logOut();
+      toast("Successfully logged out", {
+        theme: "dark",
+      });
+      router.push("/authentication/signin");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    const checkAuthentication = async () => {
+      await new Promise((resolve) => setTimeout(resolve, 50));
+      setLoading(false);
+    };
+    checkAuthentication();
+  }, [user]);
 
   const handleSignOut = async () => {
     try {
@@ -85,7 +102,7 @@ const HeaderDashboard = () => {
             <span className="ml-1 text-sm lg:text-lg">250</span>
           </li>
           <li>
-            <button className="bg-gradient-to-r from-pink-500 to-violet-500 px-2 md:px-3 py-1 md:py-2 mx-5 rounded-lg text-sm">
+            <button className="bg-gradient-to-r from-pink-500 to-violet-500 hover:bg-gradient-to-l px-2 md:px-3 py-1 md:py-2 mx-5 rounded-lg text-sm">
               Upgrade
             </button>
           </li>
@@ -94,7 +111,7 @@ const HeaderDashboard = () => {
               <img
                 onClick={() => setShowDiv(!showDiv)}
                 className="rounded-full"
-                src={session?.user?.image || "https://i.ibb.co/QcK63FR/1.jpg"}
+                src={user?.photoURL || "https://i.ibb.co/QcK63FR/1.jpg"}
                 alt=""
               />
             </div>
@@ -108,42 +125,42 @@ const HeaderDashboard = () => {
                 <div className="bg-gradient-to-r from-pink-500 to-violet-500 absolute right-0 my-5 p-3 rounded-md flex flex-col justify-center items-center mx-auto w-56">
                   <img
                     className="w-10 h-10 rounded-full"
-                    src={user?.image || "https://i.ibb.co/QcK63FR/1.jpg"}
+                    src={user?.photoURL || "https://i.ibb.co/QcK63FR/1.jpg"}
                     alt=""
                   />
 
                   <p className="text-sm lg:text-md font-semibold text-white">
-                    {user?.name || userData?.username}
+                    {user?.displayName || userData?.username}
                   </p>
                   <p className="text-xs lg:text-sm text-gray-300">
                     {user?.email || userData?.email}
                   </p>
                   <div className="flex flex-col justify-center items-center ">
-                    {userData ? (
+                    {userData || user ? (
                       <>
                         <button
                           onClick={handleSignOut}
                           className={`${
-                            session ? "hidden" : "block"
+                            user ? "hidden" : "block"
                           } group bg-gradient-to-r from-pink-500 to-violet-500 hover:bg-gradient-to-l duration-500 text-white uppercase text-sm px-2 py-1 rounded-md mt-2 w-full`}
                         >
                           <FontAwesomeIcon
                             icon={faSignOut}
                             className="group-hover:text-pink-500 w-5 h-5 mr-1"
                           />
-                           Sign Out
+                          Sign Out
                         </button>
                         <button
-                          onClick={() => signOut()}
+                          onClick={() => handleGoogleSignOut()}
                           className={`${
-                            session ? "block" : "hidden"
+                            user ? "block" : "hidden"
                           } group bg-gradient-to-r from-pink-500 to-violet-500 hover:bg-gradient-to-l duration-500 text-white uppercase text-sm px-2 py-1 rounded-md mt-2 w-full`}
                         >
                           <FontAwesomeIcon
                             icon={faSignOut}
                             className="group-hover:text-pink-500 w-5 h-5 mr-1"
                           />
-                           Sign Out
+                          Sign Out
                         </button>
                       </>
                     ) : (
@@ -159,10 +176,18 @@ const HeaderDashboard = () => {
                     )}
 
                     <button className="group bg-gradient-to-r from-pink-500 to-violet-500 hover:bg-gradient-to-l duration-500 text-white uppercase text-sm px-2 py-1 rounded-md mt-2 w-full">
-                      <FontAwesomeIcon icon={faQuestion} className="group-hover:text-pink-500 w-5 h-5" /> FAQ & Support
+                      <FontAwesomeIcon
+                        icon={faQuestion}
+                        className="group-hover:text-pink-500 w-5 h-5"
+                      />{" "}
+                      FAQ & Support
                     </button>
                     <button className="group bg-gradient-to-r from-pink-500 to-violet-500 hover:bg-gradient-to-l duration-500 text-white uppercase text-sm px-2 py-1 rounded-md mt-2 w-full">
-                      <FontAwesomeIcon icon={faGear} className="group-hover:text-pink-500 w-5 h-5" /> FAQ & Support
+                      <FontAwesomeIcon
+                        icon={faGear}
+                        className="group-hover:text-pink-500 w-5 h-5"
+                      />{" "}
+                      FAQ & Support
                     </button>
                   </div>
                 </div>

@@ -7,6 +7,8 @@ const DrawingCanvas = () => {
   const [drawing, setDrawing] = useState(false);
   const [enableBox, setEnableBox] = useState(false);
   const [boxStart, setBoxStart] = useState({ x: 0, y: 0 });
+  const [screenSize, setScreenSize] = useState(false);
+
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
@@ -68,8 +70,8 @@ const DrawingCanvas = () => {
   const handleCanvasDraw = (context, e) => {
     // Customize drawing functionality here
     // Example: Draw a solid line with a green color
-    context.strokeStyle = "teal";
-    context.lineWidth = 4; // Set the line width (adjust as needed)
+    context.strokeStyle = "green";
+    context.lineWidth = 2; // Set the line width (adjust as needed)
     context.lineCap = "round"; // Set the line cap style to round
 
     if (!drawing) {
@@ -143,6 +145,20 @@ const DrawingCanvas = () => {
     }
   }; //modified
 
+
+  // if (typeof window !== "undefined") {
+
+  //   const { innerWidth: width} = window;
+  //   if (width < 640) {
+  //     setScreenSize(true)
+  //   }
+
+  // }
+
+
+
+
+
   return (
     <div className="my-20">
       <label
@@ -183,16 +199,18 @@ const DrawingCanvas = () => {
       </label>
 
       {imageUrl && (
-        <div className="border_gradient_purple p-6 w-fit h-fit flex flex-col justify-center items-center mx-auto">
+        <div className="border_gradient_purple p-6 w-fit h-fit flex flex-col justify-center items-center mx-auto cursor-crosshair">
           <canvas
             ref={canvasRef}
-            width={800}
-            height={600}
+            className="responsive-canvas"
+            width={`${800}`}
+            height={`${600}`}
             onMouseDown={(e) => handleCanvasDrawStart(e)}
             onMouseMove={(e) => handleCanvasDrawMove(e)}
             onMouseUp={handleCanvasDrawEnd}
             onMouseLeave={handleCanvasDrawEnd}
           />
+          
 
           <div className=" my-10 flex justify-center items-center">
             <button

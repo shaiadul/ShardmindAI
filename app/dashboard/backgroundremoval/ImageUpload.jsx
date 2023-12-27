@@ -63,7 +63,7 @@ const ImageUpload = ({ setCurrentStep, setComplete }) => {
             <img
               src={imageURL}
               alt="Uploaded"
-              className="mt-2 rounded-md border-2 border-gray-400"
+              className="mt-2 rounded-md "
               style={{ maxWidth: "100%" }}
             />
           </>

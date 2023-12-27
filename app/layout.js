@@ -1,8 +1,9 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
 // import Authprovider from "@/components/authprovider/Authprovider";
-import Authprovider from "../components/authprovider/Authprovider";
+// import Authprovider from "../components/authprovider/Authprovider";
 import { Providers } from "./redux/providers";
+import { AuthContextProvider } from "../components/authprovider/AuthContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,9 +16,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Authprovider>
+        <AuthContextProvider>
           <Providers>{children}</Providers>
-        </Authprovider>
+        </AuthContextProvider>
       </body>
     </html>
   );

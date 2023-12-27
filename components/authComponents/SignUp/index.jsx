@@ -1,17 +1,21 @@
 "use client";
 import React, { useState } from "react";
-import { signIn, useSession } from "next-auth/react";
 import Animation from "@/components/animation";
 import Link from "next/link";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { UserAuth } from "@/components/authprovider/AuthContext";
+import { useRouter } from "next/navigation";
 
 const SignUp = () => {
-  const { data: session } = useSession();
+  
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const { user, googleSignIn } = UserAuth();
+
+  const router = useRouter();
 
   const handleSignUp = async () => {
     try {
@@ -36,8 +40,8 @@ const SignUp = () => {
           theme: "dark",
         });
         localStorage.setItem("email", email);
-        localStorage.setItem("username", username)
-        window.location.href = "/authentication/otp";
+        localStorage.setItem("username", username);
+        router.push("/dashboard/personalfeed");
       } else {
         toast(`Something went wrong!`, {
           theme: "dark",
@@ -52,10 +56,17 @@ const SignUp = () => {
     setShowPassword(!showPassword);
   };
 
-  if (session) {
-    window.location.href = "/dashboard/personalfeed";
-    return null;
-  }
+  const handleGoogleSignIn = async () => {
+    try {
+      await googleSignIn();
+      toast("Successfully logged in", {
+        theme: "dark",
+      });
+      router.push("/dashboard/personalfeed");
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <section className="container mx-auto">
       <div className="absolute top-0 left-0 bg-gradient-to-tl from-gray-900 via-[#2b1a48] to-[#d53a9d] bottom-0 leading-5 h-full w-full overflow-hidden"></div>
@@ -149,7 +160,7 @@ const SignUp = () => {
               </div>
               <div className="flex justify-center gap-5 w-full ">
                 <button
-                  onClick={() => signIn("google")}
+                  onClick={handleGoogleSignIn}
                   className="w-full flex items-center justify-center mb-6 md:mb-0 border border-gray-300 hover:bg-gray-600 text-sm text-gray-500 p-3  rounded-lg tracking-wide font-medium  cursor-pointer transition ease-in duration-500"
                 >
                   <svg
