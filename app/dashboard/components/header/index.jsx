@@ -22,10 +22,6 @@ const HeaderDashboard = () => {
 
   const router = useRouter();
 
- 
-
-  console.log(user);
-
   const handleGoogleSignOut = async () => {
     try {
       await logOut();

@@ -1,6 +1,7 @@
 "use client";
 
 import Animation from "@/components/animation";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -11,6 +12,8 @@ const OtpVerify = () => {
   const inputRefs = [useRef(null), useRef(null), useRef(null), useRef(null)];
   const [otp, setOtp] = useState("");
   const [componentMounted, setComponentMounted] = useState(false);
+
+  const router = useRouter();
 
   const handleOtpChange = (index, value) => {
     // Update the OTP value
@@ -50,7 +53,7 @@ const OtpVerify = () => {
         toast.error(`OTP verification successful !`, {
           theme: "dark",
         });
-        window.location.href = "/authentication/signin";
+        router.push("/authentication/signin");
       } else {
         toast.error(`Please input valid otp !`, {
           theme: "dark",

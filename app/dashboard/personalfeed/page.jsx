@@ -2,7 +2,6 @@
 import React from "react";
 import Offering from "./components/OfferingCard";
 import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
 
 const PersonalFeed = () => {
   const router = useRouter();

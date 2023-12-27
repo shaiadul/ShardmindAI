@@ -7,17 +7,6 @@ import React from "react";
 
 const AsideDashboard = () => {
 
-  // const pathname = window.location.pathname;
-
-  // const isActive = (path) => {
-  //   if (path === pathname) {
-  //     return "bg-slate-600";
-  //   } else {
-  //     return "bg-transparent";
-  //   }
-  // };
-
-  // console.log(isActive('/dashboard/personalfeed'));
 
   return (
     <div className="fixed hidden md:flex flex-col top-14 left-0 w-14 hover:w-64 md:w-64 h-full transition-all duration-300 border-none z-10 sidebar ">

@@ -146,19 +146,6 @@ const DrawingCanvas = () => {
   }; //modified
 
 
-  // if (typeof window !== "undefined") {
-
-  //   const { innerWidth: width} = window;
-  //   if (width < 640) {
-  //     setScreenSize(true)
-  //   }
-
-  // }
-
-
-
-
-
   return (
     <div className="my-20">
       <label
@@ -203,8 +190,8 @@ const DrawingCanvas = () => {
           <canvas
             ref={canvasRef}
             className="responsive-canvas"
-            width={`${800}`}
-            height={`${600}`}
+            width={800}
+            height={600}
             onMouseDown={(e) => handleCanvasDrawStart(e)}
             onMouseMove={(e) => handleCanvasDrawMove(e)}
             onMouseUp={handleCanvasDrawEnd}
