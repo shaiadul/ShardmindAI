@@ -16,6 +16,8 @@ const Dashboard = () => {
       }
     }
   }, []);
+
+  useEffect
   return <div></div>;
 };
 

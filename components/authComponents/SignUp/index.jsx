@@ -41,7 +41,7 @@ const SignUp = () => {
         });
         localStorage.setItem("email", email);
         localStorage.setItem("username", username);
-        router.push("/dashboard/personalfeed");
+        router.push("/authentication/otp");
       } else {
         toast(`Something went wrong!`, {
           theme: "dark",
