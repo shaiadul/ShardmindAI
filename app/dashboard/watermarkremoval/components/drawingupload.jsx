@@ -1,13 +1,10 @@
 "use client";
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 
-const DrawingCanvas = () => {
+const DrawingCanvas = ({ setCurrentStep, setComplete }) => {
   const canvasRef = useRef();
   const [imageUrl, setImageUrl] = useState(null);
   const [drawing, setDrawing] = useState(false);
-  const [enableBox, setEnableBox] = useState(false);
-  const [boxStart, setBoxStart] = useState({ x: 0, y: 0 });
-  const [screenSize, setScreenSize] = useState(false);
 
 
   const handleImageChange = (event) => {
@@ -16,6 +13,7 @@ const DrawingCanvas = () => {
       const reader = new FileReader();
       reader.onload = (e) => {
         setImageUrl(e.target.result);
+        setCurrentStep((prev) => prev + 1);
       };
       reader.readAsDataURL(file);
     }
@@ -65,12 +63,11 @@ const DrawingCanvas = () => {
       console.error("ImgBB API Error (Catch Block):", error);
       throw error;
     }
+    
   };
 
   const handleCanvasDraw = (context, e) => {
-    // Customize drawing functionality here
-    // Example: Draw a solid line with a green color
-    context.strokeStyle = "green";
+    context.strokeStyle = "#7FFF7F";
     context.lineWidth = 2; // Set the line width (adjust as needed)
     context.lineCap = "round"; // Set the line cap style to round
 
@@ -88,64 +85,43 @@ const DrawingCanvas = () => {
     setDrawing(true);
   };
 
-  const handleCanvasDrawStart = (e) => {
-    if (enableBox) {
-      setBoxStart({ x: e.nativeEvent.offsetX, y: e.nativeEvent.offsetY });
-      console.log(boxStart)
-    } else {
-      // Continue drawing
+  // Add this useEffect hook to load the background image when the component mounts
+  useEffect(() => {
+    if (imageUrl) {
       const canvas = canvasRef.current;
       const context = canvas.getContext("2d");
 
-      // Draw the background image
       const image = new Image();
       image.src = imageUrl;
       image.onload = () => {
         context.drawImage(image, 0, 0, canvas.width, canvas.height);
-
-        // Start drawing on top of the background image
-        setDrawing(true);
-        handleCanvasDraw(context, e);
       };
     }
+  }, [imageUrl]);
+
+  const handleCanvasDrawStart = (e) => {
+    setDrawing(true);
   }; //modified
 
   const handleCanvasDrawMove = (e) => {
-    if (enableBox) {
-      // Draw bounding box
-      const canvas = canvasRef.current;
-      const context = canvas.getContext("2d");
-      // Draw the background image
-      const image = new Image();
-      image.src = imageUrl;
-
-      context.clearRect(0, 0, canvas.width, canvas.height);
-
-      const boxWidth = e.nativeEvent.offsetX - boxStart.x;
-      const boxHeight = e.nativeEvent.offsetY - boxStart.y;
-
-      context.drawImage(image, 0, 0, canvas.width, canvas.height);
-      context.strokeStyle = "green";
-      context.lineWidth = 2;
-      context.strokeRect(boxStart.x, boxStart.y, boxWidth, boxHeight);
-    } else {
-      // Continue drawing
-      if (!drawing) return;
+    // Continue drawing
+    if (drawing) {
       const canvas = canvasRef.current;
       const context = canvas.getContext("2d");
       handleCanvasDraw(context, e);
     }
+    // }
   }; //modified
 
   const handleCanvasDrawEnd = () => {
-    if (enableBox) {
-      setEnableBox(false);
-    } else {
-      setDrawing(false);
-    }
+    setDrawing(false);
   }; //modified
 
-
+  const removeImage = () => {
+    setImageUrl(null);
+    setCurrentStep((prev) => prev - 1);
+  }; //modified
+  
   return (
     <div className="my-20">
       <label
@@ -170,7 +146,7 @@ const DrawingCanvas = () => {
         </svg>
 
         <h2 className="mt-4 text-xl font-medium text-gray-400 tracking-wide">
-          Payment File
+          Upload File
         </h2>
         <p className="mt-2 text-gray-500 tracking-wide">
           Upload or drag & drop your file SVG, PNG, JPG, or GIF.
@@ -197,26 +173,24 @@ const DrawingCanvas = () => {
             onMouseUp={handleCanvasDrawEnd}
             onMouseLeave={handleCanvasDrawEnd}
           />
-          
 
           <div className=" my-10 flex justify-center items-center">
             <button
-              className="btn mt-2 bg-gradient-to-r from-pink-500 to-violet-500 rounded-lg px-2 py-1"
-              onClick={handleSaveImage}
+              onClick={removeImage}
+              className="btn mt-2 bg-gradient-to-r from-pink-500 to-violet-500 hover:bg-gradient-to-l rounded-lg px-2 py-1 mr-2"
             >
-              Save Image
+              Remove
             </button>
             {/* <button>
               <a href={imageUrl} download="image.png">
                 Download Image
               </a>
             </button> */}
-
             <button
-              className="btn mt-2 ml-4 bg-gradient-to-r from-pink-500 to-violet-500 rounded-lg px-2 py-1"
-              onClick={() => setEnableBox(!enableBox)}
+              className="btn mt-2 bg-gradient-to-r from-pink-500 to-violet-500 hover:bg-gradient-to-l rounded-lg px-2 py-1"
+              onClick={handleSaveImage}
             >
-              {enableBox ? "Disable Box" : "Enable Box"}
+              Save Image
             </button>
           </div>
         </div>
@@ -226,34 +200,3 @@ const DrawingCanvas = () => {
 };
 
 export default DrawingCanvas;
-
-// const uploadImageToImgBB = async (base64Image) => {
-//   const blob = await fetch(base64Image).then((res) => res.blob());
-
-//   const formData = new FormData();
-//   formData.append("image", blob);
-
-//   try {
-//     const response = await fetch(
-//       "https://api.imgbb.com/1/upload?key=7a0f43e157252e0ca3031dea1d8dcccd",
-//       {
-//         method: "POST",
-//         body: formData,
-//         headers: {
-//           Accept: "application/json",
-//         },
-//       }
-//     );
-
-//     if (!response.ok) {
-//       const errorData = await response.json();
-//       console.error("ImgBB API Error:", errorData);
-//       throw new Error(`Image upload failed: ${errorData.error.message}`);
-//     }
-
-//     return response.json();
-//   } catch (error) {
-//     console.error("ImgBB API Error (Catch Block):", error);
-//     throw error;
-//   }
-// };

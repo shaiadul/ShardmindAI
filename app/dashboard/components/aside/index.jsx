@@ -56,7 +56,7 @@ const AsideDashboard = () => {
                 />
               </span>
               <span className="ml-2 text-md font-semibold tracking-wide truncate">
-              Object Removal
+              Watermark Removal
               </span>
             </Link>
           </li>

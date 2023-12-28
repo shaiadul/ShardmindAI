@@ -4,7 +4,7 @@ import { TiTick } from "react-icons/ti";
 import DrawingCanvas from "./drawingupload";
 
 const StepsWaterMark = () => {
-  const steps = ["Upload", "Processing", "Finish"];
+  const steps = ["Upload", "Processing", "download"];
   const [currentStep, setCurrentStep] = useState(1);
   const [complete, setComplete] = useState(false);
   return (

@@ -21,7 +21,7 @@ const WatermarkRemoval = () => {
     <section className="md:mx-5 my-10">
       <div className="flex justify-center">
         <span className="text-2xl md:text-4xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-[#FD5261] to-[#AA26B6]">
-          Object Removal
+          WaterMark Removal
         </span>
       </div>
 
