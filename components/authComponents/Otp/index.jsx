@@ -11,7 +11,6 @@ const OtpVerify = () => {
   const [email, setEmail] = useState("example@gmail.com");
   const inputRefs = [useRef(null), useRef(null), useRef(null), useRef(null)];
   const [otp, setOtp] = useState("");
-  const [componentMounted, setComponentMounted] = useState(false);
 
   const router = useRouter();
 
