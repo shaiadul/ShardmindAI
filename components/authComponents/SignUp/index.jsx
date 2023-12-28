@@ -17,6 +17,7 @@ const SignUp = () => {
 
   const router = useRouter();
 
+
   const handleSignUp = async () => {
     try {
       const data = {
