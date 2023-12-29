@@ -1,11 +1,28 @@
 "use client";
 import React, { useRef, useState, useEffect } from "react";
 
-const DrawingCanvas = ({ setCurrentStep, setComplete }) => {
-  const canvasRef = useRef();
+const ObjectCanvas = ({ setCurrentStep, setComplete }) => {
+  const canvasRef = useRef(null);
   const [imageUrl, setImageUrl] = useState(null);
   const [drawing, setDrawing] = useState(false);
+  const [rect, setRect] = useState(null);
 
+  useEffect(() => {
+    const canvas = canvasRef.current;
+
+    if (canvas) {
+      const context = canvas.getContext("2d");
+
+      if (imageUrl) {
+        const image = new Image();
+        image.src = imageUrl;
+
+        image.onload = () => {
+          context.drawImage(image, 0, 0, canvas.width, canvas.height);
+        };
+      }
+    }
+  }, [imageUrl]);
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
@@ -17,6 +34,47 @@ const DrawingCanvas = ({ setCurrentStep, setComplete }) => {
       };
       reader.readAsDataURL(file);
     }
+  };
+
+  const startDrawingRectangle = ({ nativeEvent }) => {
+    nativeEvent.preventDefault();
+    const { clientX, clientY } = nativeEvent;
+    const canvas = canvasRef.current;
+    const canvasOffSet = canvas.getBoundingClientRect();
+    setRect({
+      startX: clientX - canvasOffSet.left,
+      startY: clientY - canvasOffSet.top,
+    });
+    setDrawing(true);
+  };
+
+  const drawRectangle = ({ nativeEvent }) => {
+    if (!drawing) return;
+    nativeEvent.preventDefault();
+    const { clientX, clientY } = nativeEvent;
+    const canvas = canvasRef.current;
+    const canvasOffSet = canvas.getBoundingClientRect();
+    const width = clientX - canvasOffSet.left - rect.startX;
+    const height = clientY - canvasOffSet.top - rect.startY;
+
+    const context = canvas.getContext("2d");
+    context.strokeStyle = "#7FFF7F";
+    context.lineWidth = 3;
+    context.lineCap = "round";
+
+    context.clearRect(0, 0, canvas.width, canvas.height);
+
+    if (imageUrl) {
+      const image = new Image();
+      image.src = imageUrl;
+
+      context.drawImage(image, 0, 0, canvas.width, canvas.height);
+      context.strokeRect(rect.startX, rect.startY, width, height);
+    }
+  };
+
+  const stopDrawingRectangle = () => {
+    setDrawing(false);
   };
 
   const handleSaveImage = async () => {
@@ -63,70 +121,18 @@ const DrawingCanvas = ({ setCurrentStep, setComplete }) => {
       console.error("ImgBB API Error (Catch Block):", error);
       throw error;
     }
-    
   };
 
-  const handleCanvasDraw = (context, e) => {
-    context.strokeStyle = "#7FFF7F";
-    context.lineWidth = 2; // Set the line width (adjust as needed)
-    context.lineCap = "round"; // Set the line cap style to round
-
-    if (!drawing) {
-      // Move to the starting point if not already drawing
-      context.beginPath();
-      context.moveTo(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
-    } else {
-      // Draw a line to the current point
-      context.lineTo(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
-      context.stroke();
-    }
-
-    // Update the drawing state
-    setDrawing(true);
-  };
-
-  // Add this useEffect hook to load the background image when the component mounts
-  useEffect(() => {
-    if (imageUrl) {
-      const canvas = canvasRef.current;
-      const context = canvas.getContext("2d");
-
-      const image = new Image();
-      image.src = imageUrl;
-      image.onload = () => {
-        context.drawImage(image, 0, 0, canvas.width, canvas.height);
-      };
-    }
-  }, [imageUrl]);
-
-  const handleCanvasDrawStart = (e) => {
-    setDrawing(true);
-  }; //modified
-
-  const handleCanvasDrawMove = (e) => {
-    // Continue drawing
-    if (drawing) {
-      const canvas = canvasRef.current;
-      const context = canvas.getContext("2d");
-      handleCanvasDraw(context, e);
-    }
-    // }
-  }; //modified
-
-  const handleCanvasDrawEnd = () => {
-    setDrawing(false);
-  }; //modified
-
+  // --------------------------------------------------
   const removeImage = () => {
     setImageUrl(null);
     setCurrentStep((prev) => prev - 1);
-  
+
     // Clear the drawing on the canvas
     const canvas = canvasRef.current;
     const context = canvas.getContext("2d");
     context.clearRect(0, 0, canvas.width, canvas.height);
   }; //modified
-  
   return (
     <div className="my-20">
       <label
@@ -170,13 +176,11 @@ const DrawingCanvas = ({ setCurrentStep, setComplete }) => {
         <div className="border_gradient_purple p-6 w-fit h-fit flex flex-col justify-center items-center mx-auto cursor-crosshair">
           <canvas
             ref={canvasRef}
-            className="responsive-canvas"
             width={800}
             height={600}
-            onMouseDown={(e) => handleCanvasDrawStart(e)}
-            onMouseMove={(e) => handleCanvasDrawMove(e)}
-            onMouseUp={handleCanvasDrawEnd}
-            onMouseLeave={handleCanvasDrawEnd}
+            onMouseDown={startDrawingRectangle}
+            onMouseMove={drawRectangle}
+            onMouseUp={stopDrawingRectangle}
           />
 
           <div className=" my-10 flex justify-center items-center">
@@ -200,8 +204,36 @@ const DrawingCanvas = ({ setCurrentStep, setComplete }) => {
           </div>
         </div>
       )}
+
+      <div className="mt-5">
+        <div>
+          <p className="mt-4 text-xl font-medium text-gray-400 tracking-wide">
+            Select your method
+          </p>
+          <div className="flex flex-col">
+            <div>
+              <input
+                className="mt-3 mr-2"
+                type="checkbox"
+                name="auto"
+                id="auto"
+              />
+              <label htmlFor="auto">Auto</label>
+            </div>
+            <div>
+              <input
+                className="mt-3 mr-2"
+                type="checkbox"
+                name="manual"
+                id="manual"
+              />
+              <label htmlFor="manual">Manual</label>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
 
-export default DrawingCanvas;
+export default ObjectCanvas;
