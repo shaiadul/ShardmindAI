@@ -2,10 +2,12 @@
 import { UserAuth } from "@/components/authprovider/AuthContext";
 import { faNfcDirectional } from "@fortawesome/free-brands-svg-icons";
 import {
+  faBars,
   faGear,
   faQuestion,
   faSignIn,
   faSignOut,
+  faX,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
@@ -83,8 +85,12 @@ const HeaderDashboard = () => {
       <div className="flex items-center justify-center pl-3 border-none">
         <Link href="/dashboard/personalfeed">
           <img
-            className="object-contain md:h-10 w-fit"
+            className="hidden md:block object-contain md:h-10 w-fit"
             src="https://i.ibb.co/ZY7Jvzk/logo2.png"
+          />
+          <img
+            className="md:hidden object-contain h-10 w-10"
+            src="https://i.ibb.co/Wtdt1JQ/Shardmindlogo.png"
           />
         </Link>
       </div>
@@ -106,7 +112,7 @@ const HeaderDashboard = () => {
             <div className="w-7 lg:w-10 h-7 lg:h-10 object-fit">
               <img
                 onClick={() => setShowDiv(!showDiv)}
-                className="rounded-full"
+                className="rounded-full cursor-pointer"
                 src={user?.photoURL || "https://i.ibb.co/QcK63FR/1.jpg"}
                 alt=""
               />
@@ -189,6 +195,13 @@ const HeaderDashboard = () => {
                 </div>
               )}
             </div>
+          </li>
+          <li>
+            <FontAwesomeIcon
+              icon={faBars}
+              // icon={faX}
+              className="group-hover:text-pink-500 w-5 h-5 ml-4"
+            />
           </li>
         </ul>
         <ToastContainer />

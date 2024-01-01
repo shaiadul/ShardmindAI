@@ -7,15 +7,16 @@ body {
   color: #fff;
 }
 .border_gradient_purple {
-  border: 10px solid;
-  border-image-source: linear-gradient(to left, #743ad5, #d53a9d);
-  border-image-slice: 1;
-  border-width: 5px;
+  border: 5px solid;
+  border-image: linear-gradient(270deg,#743ad5,#d53a9d) 1;
+  /* border-image-source: linear-gradient(to left, #743ad5, #d53a9d);
+  border-image-slice: 1; */
 }
 .border_gradient {
   border: 3px solid;
-  border-image-source: linear-gradient(to left, #743ad5, #d53a9d);
-  border-image-slice: 1;
+  border-image: linear-gradient(270deg,#743ad5,#d53a9d) 1;
+  /* border-image-source: linear-gradient(to left, #743ad5, #d53a9d);
+  border-image-slice: 1; */
 }
 
 
