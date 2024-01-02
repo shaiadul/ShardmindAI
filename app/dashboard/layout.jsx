@@ -1,7 +1,6 @@
 import React from "react";
 import HeaderDashboard from "./components/header";
 import AsideDashboard from "./components/aside";
-import BottomNav from "./components/bottomnav";
 
 const layout = ({ children }) => {
   return (
@@ -10,7 +9,6 @@ const layout = ({ children }) => {
         <HeaderDashboard />
         <AsideDashboard />
         <div className="h-auto my-20 md:ml-64">{children}</div>
-        <BottomNav />
       </div>
     </div>
   );

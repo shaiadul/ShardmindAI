@@ -41,7 +41,7 @@ const PersonalFeed = () => {
     "https://source.unsplash.com/random/300x300/?20",
   ];
   return (
-    <section className="md:mx-5 my-10">
+    <section className="mx-5 my-10">
       <span className="bg-clip-text text-4xl font-bold text-transparent bg-gradient-to-r from-[#FD5261] to-[#AA26B6]">
         Featured Model
       </span>

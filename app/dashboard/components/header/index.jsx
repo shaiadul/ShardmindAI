@@ -1,13 +1,16 @@
 "use client";
 import { UserAuth } from "@/components/authprovider/AuthContext";
-import { faNfcDirectional } from "@fortawesome/free-brands-svg-icons";
+import { faImage, faObjectGroup } from "@fortawesome/free-regular-svg-icons";
 import {
   faBars,
   faGear,
+  faHome,
   faQuestion,
   faSignIn,
   faSignOut,
+  faWaterLadder,
   faX,
+  faXmark,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
@@ -18,6 +21,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 const HeaderDashboard = () => {
   const [showDiv, setShowDiv] = useState(false);
+  const [showAside, setShowAside] = useState(false);
   const [userData, setUserData] = useState({ username: "", email: "" });
   const { user, logOut } = UserAuth();
   const [loading, setLoading] = useState(true);
@@ -97,10 +101,16 @@ const HeaderDashboard = () => {
       <div className="flex justify-between items-center h-14 header-right ml-2 mr-5">
         <ul className="flex items-center">
           <li className="flex justify-center items-center">
-            <FontAwesomeIcon
+            {/* <FontAwesomeIcon
               icon={faNfcDirectional}
               className="text-[#ec58f6] w-5 h-5 mr-1"
+            /> */}
+            <img
+              className="w-10 h-10 mb-1"
+              src="https://i.ibb.co/Y7Dr4Nj/Screenshot-2024-01-02-011945-removebg-preview.png"
+              alt="icon"
             />
+
             <span className="ml-1 text-sm lg:text-lg">250</span>
           </li>
           <li>
@@ -198,10 +208,87 @@ const HeaderDashboard = () => {
           </li>
           <li>
             <FontAwesomeIcon
-              icon={faBars}
-              // icon={faX}
-              className="group-hover:text-pink-500 w-5 h-5 ml-4"
+              onClick={() => setShowAside(!showAside)}
+              icon={showAside ? faXmark : faBars}
+              className="text-white hover:text-pink-500 w-5 h-5 ml-4 block md:hidden "
             />
+            {/* show aside */}
+            <div
+              className={`transition-transform duration-300 ease-in-out transform ${
+                showAside ? "translate-x-0" : "translate-x-full"
+              } `}
+            >
+              {showAside && (
+                <div className="bg-[#0c051f] absolute -right-5 my-5 p-3 flex flex-col justify-start items-center mx-auto w-60 h-[100vh]">
+                  <ul>
+                    <li>
+                      <Link
+                        href="/dashboard/personalfeed"
+                        className={`focus-within:bg-slate-600 relative flex flex-row items-center h-11 focus:outline-none text-white-600 hover:text-white-800 pr-6 rounded-md`}
+                      >
+                        <span className="inline-flex justify-center items-center ml-4">
+                          <FontAwesomeIcon
+                            icon={faHome}
+                            className="text-[#C61FA2] w-5 h-5"
+                          />
+                        </span>
+                        <span className="ml-2 text-md tracking-wide truncate">
+                          Personal Feed
+                        </span>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        href="/dashboard/backgroundremoval"
+                        className={`focus-within:bg-slate-600 relative flex flex-row items-center h-11 focus:outline-none  text-white-600 hover:text-white-800 pr-6 rounded-md`}
+                      >
+                        <span className="inline-flex justify-center items-center ml-4">
+                          <FontAwesomeIcon
+                            icon={faImage}
+                            className="text-[#C61FA2] w-5 h-5"
+                          />
+                        </span>
+                        <span className="ml-2 text-md tracking-wide truncate">
+                          Background Removal
+                        </span>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        href="/dashboard/watermarkremoval"
+                        className={`focus-within:bg-slate-600 relative flex flex-row items-center h-11 focus:outline-none text-white-600 hover:text-white-800 pr-6 rounded-md`}
+                      >
+                        <span className="inline-flex justify-center items-center ml-4">
+                          <FontAwesomeIcon
+                            icon={faWaterLadder}
+                            className="text-[#C61FA2] w-5 h-5"
+                          />
+                        </span>
+                        <span className="ml-2 text-md tracking-wide truncate">
+                          Watermark Removal
+                        </span>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        href="/dashboard/objectremoval"
+                        className={`focus-within:bg-slate-600 relative flex flex-row items-center h-11 focus:outline-none text-white-600 hover:text-white-800 pr-6 rounded-md`}
+                      >
+                        <span className="inline-flex justify-center items-center ml-4">
+                          <FontAwesomeIcon
+                            icon={faObjectGroup}
+                            className="text-[#C61FA2] w-5 h-5"
+                          />
+                        </span>
+                        <span className="ml-2 text-md tracking-wide truncate">
+                          Object Removal
+                        </span>
+                      </Link>
+                    </li>
+                  </ul>
+                </div>
+              )}
+            </div>
           </li>
         </ul>
         <ToastContainer />

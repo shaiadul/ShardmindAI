@@ -23,7 +23,7 @@ const Offering = () => {
           </p>
           <a
             href="#"
-            className="text-white bg-gradient-to-r from-[#FD5261] to-[#AA26B6] font-medium rounded-lg text-sm px-3 py-2 text-center inline-flex items-center "
+            className="text-white bg-gradient-to-r from-[#FD5261] to-[#AA26B6] hover:bg-gradient-to-l font-medium rounded-lg text-sm px-3 py-2 text-center inline-flex items-center "
           >
             Read more
             <svg
