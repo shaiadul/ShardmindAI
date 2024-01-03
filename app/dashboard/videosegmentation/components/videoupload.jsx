@@ -1,11 +1,12 @@
 "use client";
 import React, { useRef, useState, useEffect } from "react";
 
-const ObjectCanvas = ({ setCurrentStep, setComplete }) => {
+const VideoCanvas = ({ setCurrentStep, setComplete }) => {
   const canvasRef = useRef(null);
   const [imageUrl, setImageUrl] = useState(null);
   const [drawing, setDrawing] = useState(false);
   const [rect, setRect] = useState(null);
+  const [value, setValue] = useState(50);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -133,6 +134,11 @@ const ObjectCanvas = ({ setCurrentStep, setComplete }) => {
     const context = canvas.getContext("2d");
     context.clearRect(0, 0, canvas.width, canvas.height);
   }; //modified
+
+  //   --------------------------------------------------
+  const handleChange = (event) => {
+    setValue(event.target.value);
+  };
   return (
     <div className="my-20">
       <label
@@ -157,17 +163,17 @@ const ObjectCanvas = ({ setCurrentStep, setComplete }) => {
         </svg>
 
         <h2 className="mt-4 text-xl font-medium text-gray-400 tracking-wide">
-          Upload File
+          Upload Video
         </h2>
         <p className="mt-2 text-gray-500 tracking-wide">
-          Upload or drag & drop your file SVG, PNG, JPG, or GIF.
+          Upload or drag & drop your file mp3, mkv, ts .
         </p>
 
         <input
           id="dropzone-file"
           type="file"
           className="hidden"
-          accept="image/*"
+          accept="video/*"
           onChange={handleImageChange}
         />
       </label>
@@ -185,13 +191,15 @@ const ObjectCanvas = ({ setCurrentStep, setComplete }) => {
             />
           </div>
           <div className=" my-10 flex-col justify-center items-center">
-            <div className="flex justify-center items-center max-w-[180px] mx-auto">
-              <span>Manual</span>
-              <label class="switch_obj flex justify-center my-5 mx-auto">
-                <input type="checkbox" />
-                <span class="slider_obj"></span>
-              </label>
-              <span>Auto</span>
+            <div className="custom-range-slider ">
+              <input
+                type="range"
+                min="0"
+                max="100"
+                value={value}
+                onChange={handleChange}
+              />
+              <span className="font-sans font-semibold text-lg bg-clip-text text-transparent bg-gradient-to-r from-[#FD5261] to-[#AA26B6]">{value}</span>
             </div>
             <div className="flex justify-center items-center">
               <button
@@ -209,7 +217,7 @@ const ObjectCanvas = ({ setCurrentStep, setComplete }) => {
                 className="btn mt-2 bg-gradient-to-r from-pink-500 to-violet-500 hover:bg-gradient-to-l rounded-lg px-2 py-1"
                 onClick={handleSaveImage}
               >
-                Save Image
+                Next
               </button>
             </div>
           </div>
@@ -219,4 +227,4 @@ const ObjectCanvas = ({ setCurrentStep, setComplete }) => {
   );
 };
 
-export default ObjectCanvas;
+export default VideoCanvas;

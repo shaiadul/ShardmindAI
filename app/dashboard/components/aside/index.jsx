@@ -1,6 +1,10 @@
 "use client";
 import { faImage, faObjectGroup } from "@fortawesome/free-regular-svg-icons";
-import { faHome, faWaterLadder } from "@fortawesome/free-solid-svg-icons";
+import {
+  faHome,
+  faVideo,
+  faWaterLadder,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 import React from "react";
@@ -71,6 +75,22 @@ const AsideDashboard = () => {
               </span>
               <span className="ml-2 text-md font-semibold tracking-wide truncate">
                 Object Removal
+              </span>
+            </Link>
+          </li>
+          <li>
+            <Link
+              href="/dashboard/videosegmentation"
+              className={`focus-within:bg-slate-600 relative flex flex-row items-center h-11 focus:outline-none text-white-600 hover:text-white-800 pr-6 rounded-md`}
+            >
+              <span className="inline-flex justify-center items-center ml-4">
+                <FontAwesomeIcon
+                  icon={faVideo}
+                  className="text-[#C61FA2] w-5 h-5"
+                />
+              </span>
+              <span className="ml-2 text-md font-semibold tracking-wide truncate">
+                Video Segmentation
               </span>
             </Link>
           </li>

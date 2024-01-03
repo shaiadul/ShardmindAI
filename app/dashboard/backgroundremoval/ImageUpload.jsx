@@ -85,7 +85,7 @@ const ImageUpload = ({ setCurrentStep, setComplete }) => {
             </svg>
 
             <h2 className="mt-4 text-xl font-medium text-gray-400 tracking-wide">
-              Payment File
+              Upload File
             </h2>
             <p className="mt-2 text-gray-500 tracking-wide">
               Upload or drag & drop your file SVG, PNG, JPG, or GIF.

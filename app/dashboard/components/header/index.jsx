@@ -8,6 +8,7 @@ import {
   faQuestion,
   faSignIn,
   faSignOut,
+  faVideo,
   faWaterLadder,
   faX,
   faXmark,
@@ -124,7 +125,7 @@ const HeaderDashboard = () => {
                 onClick={() => setShowDiv(!showDiv)}
                 className="rounded-full cursor-pointer"
                 src={user?.photoURL || "https://i.ibb.co/QcK63FR/1.jpg"}
-                alt=""
+                alt="user picture"
               />
             </div>
             {/* users card */}
@@ -134,7 +135,7 @@ const HeaderDashboard = () => {
               }`}
             >
               {showDiv && (
-                <div className="bg-gradient-to-r from-pink-500 to-violet-500 absolute right-0 my-5 p-3 rounded-md flex flex-col justify-center items-center mx-auto w-56">
+                <div className="bg-gradient-to-r from-pink-500 to-violet-500 absolute right-0 my-5 p-3 rounded-md flex flex-col justify-center items-center mx-auto w-56 transition-all">
                   <img
                     className="w-10 h-10 rounded-full"
                     src={user?.photoURL || "https://i.ibb.co/QcK63FR/1.jpg"}
@@ -282,6 +283,22 @@ const HeaderDashboard = () => {
                         </span>
                         <span className="ml-2 text-md tracking-wide truncate">
                           Object Removal
+                        </span>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        href="/dashboard/videosegmentation"
+                        className={`focus-within:bg-slate-600 relative flex flex-row items-center h-11 focus:outline-none text-white-600 hover:text-white-800 pr-6 rounded-md`}
+                      >
+                        <span className="inline-flex justify-center items-center ml-4">
+                          <FontAwesomeIcon
+                            icon={faVideo}
+                            className="text-[#C61FA2] w-5 h-5"
+                          />
+                        </span>
+                        <span className="ml-2 text-md tracking-wide truncate">
+                          Video Segmentation
                         </span>
                       </Link>
                     </li>

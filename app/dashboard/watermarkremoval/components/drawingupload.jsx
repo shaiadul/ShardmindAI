@@ -6,7 +6,6 @@ const DrawingCanvas = ({ setCurrentStep, setComplete }) => {
   const [imageUrl, setImageUrl] = useState(null);
   const [drawing, setDrawing] = useState(false);
 
-
   const handleImageChange = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -63,12 +62,11 @@ const DrawingCanvas = ({ setCurrentStep, setComplete }) => {
       console.error("ImgBB API Error (Catch Block):", error);
       throw error;
     }
-    
   };
 
   const handleCanvasDraw = (context, e) => {
     context.strokeStyle = "#7FFF7F";
-    context.lineWidth = 2; // Set the line width (adjust as needed)
+    context.lineWidth = 15; // Set the line width (adjust as needed)
     context.lineCap = "round"; // Set the line cap style to round
 
     if (!drawing) {
@@ -120,13 +118,13 @@ const DrawingCanvas = ({ setCurrentStep, setComplete }) => {
   const removeImage = () => {
     setImageUrl(null);
     setCurrentStep((prev) => prev - 1);
-  
+
     // Clear the drawing on the canvas
     const canvas = canvasRef.current;
     const context = canvas.getContext("2d");
     context.clearRect(0, 0, canvas.width, canvas.height);
   }; //modified
-  
+
   return (
     <div className="my-20">
       <label
@@ -167,18 +165,19 @@ const DrawingCanvas = ({ setCurrentStep, setComplete }) => {
       </label>
 
       {imageUrl && (
-        <div className="border_gradient_purple p-6 w-fit h-fit flex flex-col justify-center items-center mx-auto cursor-crosshair">
-          <canvas
-            ref={canvasRef}
-            className="responsive-canvas"
-            width={800}
-            height={600}
-            onMouseDown={(e) => handleCanvasDrawStart(e)}
-            onMouseMove={(e) => handleCanvasDrawMove(e)}
-            onMouseUp={handleCanvasDrawEnd}
-            onMouseLeave={handleCanvasDrawEnd}
-          />
-
+        <div>
+          <div className="border_gradient_purple p-6 w-fit h-fit flex flex-col justify-center items-center mx-auto cursor-crosshair">
+            <canvas
+              ref={canvasRef}
+              className="responsive-canvas"
+              width={800}
+              height={600}
+              onMouseDown={(e) => handleCanvasDrawStart(e)}
+              onMouseMove={(e) => handleCanvasDrawMove(e)}
+              onMouseUp={handleCanvasDrawEnd}
+              onMouseLeave={handleCanvasDrawEnd}
+            />
+          </div>
           <div className=" my-10 flex justify-center items-center">
             <button
               onClick={removeImage}
