@@ -123,7 +123,7 @@ const ObjectCanvas = ({ setCurrentStep, setComplete }) => {
     }
   };
 
-  // --------------------------------------------------
+  // ---------------------------------
   const removeImage = () => {
     setImageUrl(null);
     setCurrentStep((prev) => prev - 1);
