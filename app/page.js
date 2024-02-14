@@ -2,11 +2,12 @@
 import { UserAuth } from "@/components/authprovider/AuthContext";
 import AddUserComponents from "@/components/testComponents/addUser";
 import ShowUser from "@/components/testComponents/showUser";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 export default function Home() {
   const router = useRouter();
+const pathname = usePathname();
   const { user } = UserAuth();
 
   useEffect(() => {
@@ -18,6 +19,13 @@ export default function Home() {
       }
     }
   }, []);
+
+  useEffect(() => {
+  if(pathname === "/"){
+    router.push("/dashboard/personalfeed")
+  }
+  }, []);
+
   return (
     <main>
       {/* <h1 className="text-center my-10">Home / must be deleted</h1>

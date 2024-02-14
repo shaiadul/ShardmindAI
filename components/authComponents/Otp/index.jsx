@@ -158,20 +158,20 @@ const OtpVerify = () => {
 
   return (
     <section className="container mx-auto">
-      <div className="absolute top-0 left-0 bg-gradient-to-tl from-gray-900 via-[#2b1a48] to-[#d53a9d] bottom-0 leading-5 h-full w-full overflow-hidden"></div>
+      <div className="absolute top-0 left-0 bg-[#0C051F] bottom-0 leading-5 h-full w-full overflow-hidden"></div>
       <Animation />
       <div className="relative min-h-screen sm:flex sm:flex-row justify-center bg-transparent p-3">
         <div className="flex justify-center items-center self-center z-10 mt-[50%] md:mt-0 lg:mt-0 xl:mt-0">
           <div className="p-8 bg-white mx-auto rounded-3xl w-96 ">
             <div className="mb-7">
-              <h3 className="font-semibold font-serif text-2xl text-gray-800">
+              <h3 className="font-semibold text-2xl text-gray-800">
                 Email Verification{" "}
               </h3>
               <p className="text-gray-400">
-                We have sent a code{" "}
+                Code has been sent{" "}
                 <a
                   mailto="mailto:example@gmail.com"
-                  className="text-sm text-[#b14bf4] hover:opacity-75"
+                  className="text-[15px] text-black font-semibold hover:opacity-75"
                 >
                   {email}
                 </a>
@@ -199,7 +199,7 @@ const OtpVerify = () => {
                   Did not recieve code?
                   <span
                     onClick={resendOtp}
-                    className="text-[#b14bf4] hover:opacity-75 pl-1 cursor-pointer"
+                    className="text-black hover:opacity-75 pl-1 cursor-pointer"
                   >
                     Resend
                   </span>
@@ -209,26 +209,13 @@ const OtpVerify = () => {
               <div>
                 <button
                   onClick={verifyOtp}
-                  className="w-full flex justify-center bg-gradient-to-r from-pink-500 to-violet-500 hover:bg-gradient-to-l text-gray-100 p-3  rounded-lg tracking-wide font-semibold  cursor-pointer transition ease-in duration-500"
+                  className="w-full flex justify-center btn_color_gradient hover:opacity-80 text-gray-100 p-3  rounded-lg tracking-wide font-semibold  cursor-pointer transition ease-in duration-500"
                 >
                   Confirm
                 </button>
               </div>
             </div>
-            <div className="mt-7 text-center text-gray-300 text-xs">
-              <span>
-                Copyright © 2021-2023
-                <a
-                  href="#"
-                  rel=""
-                  target="_blank"
-                  title="shardmind"
-                  className="text-[#b14bf4] hover:opacity-75 pl-1"
-                >
-                  SHARDMIND
-                </a>
-              </span>
-            </div>
+           
           </div>
         </div>
       </div>

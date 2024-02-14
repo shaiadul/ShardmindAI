@@ -68,7 +68,7 @@ const AsideDashboard = () => {
           <li>
             <Link
               href="/dashboard/objectremoval"
-              className={`${pathname == '/dashboard/objectremoval' ? 'bg-slate-600' : ''} focus-within:bg-slate-600 relative flex flex-row items-center h-11 focus:outline-none text-white-600 hover:text-white-800 pr-6 rounded-md`}
+              className={`${pathname == '/dashboard/objectremoval' ? 'bg-slate-600' : ''} relative flex flex-row items-center h-11 focus:outline-none text-white-600 hover:text-white-800 pr-6 rounded-md`}
             >
               <span className="inline-flex justify-center items-center ml-4">
                 <FontAwesomeIcon
@@ -84,7 +84,7 @@ const AsideDashboard = () => {
           <li>
             <Link
               href="/dashboard/videosegmentation"
-              className={`${pathname == '/dashboard/videosegmentation' ? 'bg-slate-600' : ''} focus-within:bg-slate-600 relative flex flex-row items-center h-11 focus:outline-none text-white-600 hover:text-white-800 pr-6 rounded-md`}
+              className={`${pathname == '/dashboard/videosegmentation' ? 'bg-slate-600' : ''} relative flex flex-row items-center h-11 focus:outline-none text-white-600 hover:text-white-800 pr-6 rounded-md`}
             >
               <span className="inline-flex justify-center items-center ml-4">
                 <FontAwesomeIcon
@@ -98,6 +98,14 @@ const AsideDashboard = () => {
             </Link>
           </li>
         </ul>
+
+        {/* <option value="">Gulf Medical Center</option>
+        <option value="">Gulshan Medicare-Dhaka</option>
+        <option value="">Medinova Medical Service</option>
+
+ */}
+
+
         <p className="mb-14 px-5 py-3 hidden md:block text-center text-xs">
           Copyright @2023 Shardmind
         </p>

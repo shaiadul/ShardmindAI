@@ -6,15 +6,27 @@ body {
   background: #0c051f;
   color: #fff;
 }
+*{
+  font-family: "Plus Jakarta Sans", sans-serif;
+  }
+.btn_color_gradient {
+  background-image: linear-gradient(
+    70.02deg,
+    #d61f96 -53.47%,
+    #b14bf4 37.52%,
+    #4d91ff 100.8%
+  ) !important;
+}
+
 .border_gradient_purple {
   border: 5px solid;
-  border-image: linear-gradient(270deg,#743ad5,#d53a9d) 1;
+  border-image: linear-gradient(270deg, #743ad5, #d53a9d) 1;
   /* border-image-source: linear-gradient(to left, #743ad5, #d53a9d);
   border-image-slice: 1; */
 }
 .border_gradient {
   border: 3px solid;
-  border-image: linear-gradient(270deg,#743ad5,#d53a9d) 1;
+  border-image: linear-gradient(270deg, #743ad5, #d53a9d) 1;
   /* border-image-source: linear-gradient(to left, #743ad5, #d53a9d);
   border-image-slice: 1; */
 }
@@ -28,16 +40,16 @@ body {
   position: relative;
   width: 3.7em;
   height: 1.8em;
- }
- 
- .switch_obj input {
+}
+
+.switch_obj input {
   display: none;
   opacity: 0;
   width: 0;
   height: 0;
- }
- 
- .slider_obj {
+}
+
+.slider_obj {
   position: absolute;
   cursor: pointer;
   top: 0;
@@ -45,11 +57,11 @@ body {
   right: 0;
   bottom: 0;
   background-color: #313033;
-  transition: .2s;
+  transition: 0.2s;
   border-radius: 30px;
- }
- 
- .slider_obj:before {
+}
+
+.slider_obj:before {
   position: absolute;
   content: "";
   height: 1.4em;
@@ -58,29 +70,29 @@ body {
   left: 0.2em;
   bottom: 0.2em;
   background-color: #aeaaae;
-  transition: .4s;
- }
- 
- input:checked + .slider_obj::before {
-  background-color: var(--primary);
- }
- 
- input:checked + .slider_obj {
-  background-color: var(--secondary-container);
- }
- 
- input:focus + .slider_obj {
-  box-shadow: 0 0 1px var(--secondary-container);
- }
- 
- input:checked + .slider_obj:before {
-  transform: translateX(1.9em);
- }
+  transition: 0.4s;
+}
 
- /* -----------------------
+input:checked + .slider_obj::before {
+  background-color: var(--primary);
+}
+
+input:checked + .slider_obj {
+  background-color: var(--secondary-container);
+}
+
+input:focus + .slider_obj {
+  box-shadow: 0 0 1px var(--secondary-container);
+}
+
+input:checked + .slider_obj:before {
+  transform: translateX(1.9em);
+}
+
+/* -----------------------
   Custom range selector
  ------------------------- */
- .custom-range-slider {
+.custom-range-slider {
   width: 80%;
   margin: 20px auto;
   display: flex;
@@ -95,7 +107,6 @@ input[type="range"] {
   height: 8px;
   border-radius: 5px;
 }
-
 
 /* 
 @media screen and (min-width: 600px) {
