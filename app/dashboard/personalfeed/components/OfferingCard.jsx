@@ -1,8 +1,27 @@
 import React from "react";
+import { motion } from "framer-motion";
 
 const Offering = () => {
+  // ---------------------------
+  // Farmer motion
+  // ---------------------------
+  const variant = {
+    hidden: { opacity: 0, scale: 0.9, },
+    visible: {
+      opacity: 1,
+      scale: 1,
+    },
+  };
+
   return (
-    <div className="max-w-2xl mx-auto">
+    <motion.div
+      variants={variant}
+      initial="hidden"
+      whileHover={{ scale: 1 }}
+      animate="visible"
+      transition={{ duration: 1, ease: "easeInOut"}}
+      className="max-w-2xl mx-auto"
+    >
       <div className="shadow-md border-gray-200 rounded-lg max-w-sm bg-transparent">
         <a href="#">
           <img
@@ -23,11 +42,11 @@ const Offering = () => {
           </p>
           <a
             href="#"
-            className="text-white btn_color_gradient hover:opacity-90 duration-500 font-medium rounded-lg text-sm px-3 py-2 text-center inline-flex items-center "
+            className="group text-white btn_color_gradient hover:opacity-90 duration-500 font-medium rounded-lg text-sm px-3 py-2 text-center inline-flex items-center "
           >
             Read more
             <svg
-              className="-mr-1 ml-2 h-4 w-4"
+              className="-mr-1 ml-2 h-4 w-4 group-hover:translate-x-1 duration-700"
               fill="currentColor"
               viewBox="0 0 20 20"
               xmlns="http://www.w3.org/2000/svg"
@@ -41,7 +60,7 @@ const Offering = () => {
           </a>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

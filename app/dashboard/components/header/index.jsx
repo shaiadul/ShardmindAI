@@ -1,6 +1,7 @@
 "use client";
 import { UserAuth } from "@/components/authprovider/AuthContext";
 import { faImage, faObjectGroup } from "@fortawesome/free-regular-svg-icons";
+import { motion } from "framer-motion";
 import {
   faBars,
   faGear,
@@ -85,6 +86,14 @@ const HeaderDashboard = () => {
     }
   }, []);
 
+  // ---------------------------
+  // Farmer motion
+  // ---------------------------
+  const variants = {
+    open: { opacity: 1, x: 0 },
+    closed: { opacity: 0, x: "100%" },
+  };
+
   return (
     <div className=" w-full flex items-center justify-between h-16 fixed z-20 bg-[#0c051f]">
       <div className="flex items-center justify-center pl-3 border-none">
@@ -92,10 +101,12 @@ const HeaderDashboard = () => {
           <img
             className="hidden md:block object-contain md:h-10 w-fit"
             src="https://i.ibb.co/ZY7Jvzk/logo2.png"
+            alt="logo"
           />
           <img
             className="md:hidden object-contain h-10 w-10"
             src="https://i.ibb.co/Wtdt1JQ/Shardmindlogo.png"
+            alt="logo"
           />
         </Link>
       </div>
@@ -129,10 +140,14 @@ const HeaderDashboard = () => {
               />
             </div>
             {/* users card */}
-            <div
-              className={`transition-transform duration-300 ease-in-out transform ${
-                showDiv ? "translate-x-0" : "translate-x-full"
-              }`}
+            <motion.div
+              // className={`transition-transform duration-300 ease-in-out transform ${
+              //   showDiv ? "translate-x-0" : "translate-x-full"
+              // }`}
+              initial={false}
+              animate={showDiv ? "open" : "closed"}
+              variants={variants}
+              transition={{ duration: 0.5, ease: "easeInOut" }}
             >
               {showDiv && (
                 <div className="bg_color_gradient absolute right-0 my-5 p-3 rounded-md flex flex-col justify-center items-center mx-auto w-56 transition-all">
@@ -205,7 +220,7 @@ const HeaderDashboard = () => {
                   </div>
                 </div>
               )}
-            </div>
+            </motion.div>
           </li>
           <li>
             <FontAwesomeIcon
