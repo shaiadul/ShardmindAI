@@ -115,7 +115,7 @@ const HeaderDashboard = () => {
             <span className="ml-1 text-sm lg:text-lg">250</span>
           </li>
           <li>
-            <button className="bg-gradient-to-r from-pink-500 to-violet-500 hover:bg-gradient-to-l px-2 md:px-3 py-1 md:py-2 mx-5 rounded-lg text-sm">
+            <button className="btn_color_gradient hover:opacity-90 duration-500 px-2 md:px-3 py-1 md:py-2 mx-5 rounded-lg text-sm">
               Upgrade
             </button>
           </li>
@@ -135,7 +135,7 @@ const HeaderDashboard = () => {
               }`}
             >
               {showDiv && (
-                <div className="bg-gradient-to-r from-pink-500 to-violet-500 absolute right-0 my-5 p-3 rounded-md flex flex-col justify-center items-center mx-auto w-56 transition-all">
+                <div className="bg_color_gradient absolute right-0 my-5 p-3 rounded-md flex flex-col justify-center items-center mx-auto w-56 transition-all">
                   <img
                     className="w-10 h-10 rounded-full"
                     src={user?.photoURL || "https://i.ibb.co/QcK63FR/1.jpg"}
@@ -145,7 +145,7 @@ const HeaderDashboard = () => {
                   <p className="text-sm lg:text-md font-semibold text-white">
                     {user?.displayName || userData?.username}
                   </p>
-                  <p className="text-xs lg:text-sm text-gray-300">
+                  <p className="text-xs lg:text-sm mt-1 text-gray-200">
                     {user?.email || userData?.email}
                   </p>
                   <div className="flex flex-col justify-center items-center ">
@@ -155,11 +155,11 @@ const HeaderDashboard = () => {
                           onClick={handleSignOut}
                           className={`${
                             user ? "hidden" : "block"
-                          } group bg-gradient-to-r from-pink-500 to-violet-500 hover:bg-gradient-to-l duration-500 text-white uppercase text-sm px-2 py-1 rounded-md mt-2 w-full`}
+                          } group btn_color_gradient hover:scale-105 duration-500 text-white uppercase text-sm px-2 py-1 rounded-md mt-2 w-full`}
                         >
                           <FontAwesomeIcon
                             icon={faSignOut}
-                            className="group-hover:text-pink-500 w-5 h-5 mr-1"
+                            className="group-hover:rotate-90 duration-500 w-4 h-4 mr-1"
                           />
                           Sign Out
                         </button>
@@ -167,40 +167,40 @@ const HeaderDashboard = () => {
                           onClick={() => handleGoogleSignOut()}
                           className={`${
                             user ? "block" : "hidden"
-                          } group bg-gradient-to-r from-pink-500 to-violet-500 hover:bg-gradient-to-l duration-500 text-white uppercase text-sm px-2 py-1 rounded-md mt-2 w-full`}
+                          } group btn_color_gradient hover:scale-105 duration-500 text-white uppercase text-sm px-2 py-1 rounded-md mt-2 w-full`}
                         >
                           <FontAwesomeIcon
                             icon={faSignOut}
-                            className="group-hover:text-pink-500 w-5 h-5 mr-1"
+                            className="w-4 h-4 mr-1"
                           />
                           Sign Out
                         </button>
                       </>
                     ) : (
                       <Link href="/authentication/signin">
-                        <button className="group bg-gradient-to-r from-pink-500 to-violet-500 hover:bg-gradient-to-l duration-500 text-white uppercase text-sm px-2 py-1 rounded-md mt-2 w-full">
+                        <button className="group btn_color_gradient hover:scale-105 duration-500 text-white uppercase text-sm px-2 py-1 rounded-md mt-2 w-full">
                           <FontAwesomeIcon
                             icon={faSignIn}
-                            className="group-hover:text-pink-500 w-5 h-5 mr-1"
+                            className="w-4 h-4 mr-1"
                           />
                           Sign In
                         </button>
                       </Link>
                     )}
 
-                    <button className="group bg-gradient-to-r from-pink-500 to-violet-500 hover:bg-gradient-to-l duration-500 text-white uppercase text-sm px-2 py-1 rounded-md mt-2 w-full">
+                    <button className="group btn_color_gradient hover:scale-105 duration-500 text-white uppercase text-sm px-2 py-1 rounded-md mt-2 w-full">
                       <FontAwesomeIcon
                         icon={faQuestion}
-                        className="group-hover:text-pink-500 w-5 h-5"
+                        className="group-hover:rotate-[360deg] duration-700 w-4 h-4 mr-1"
                       />{" "}
                       FAQ & Support
                     </button>
-                    <button className="group bg-gradient-to-r from-pink-500 to-violet-500 hover:bg-gradient-to-l duration-500 text-white uppercase text-sm px-2 py-1 rounded-md mt-2 w-full">
+                    <button className="group btn_color_gradient hover:scale-105 duration-500 text-white uppercase text-sm px-2 py-1 rounded-md mt-2 w-full flex justify-center content-center">
                       <FontAwesomeIcon
                         icon={faGear}
-                        className="group-hover:text-pink-500 w-5 h-5"
+                        className="group-hover:rotate-90 duration-500 w-4 h-4 mr-1"
                       />{" "}
-                      FAQ & Support
+                      Settings
                     </button>
                   </div>
                 </div>
