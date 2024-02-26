@@ -1,5 +1,6 @@
-import React from 'react'
-import StepsVideo from './components/stepsvideo'
+"use client";
+import React from "react";
+import StepsVideo from "./components/stepsvideo";
 
 const VideoSegmentation = () => {
   return (
@@ -15,9 +16,10 @@ const VideoSegmentation = () => {
           How to Use
         </p>
       </div>
-      <StepsVideo /> 
+      <StepsVideo />
+  
     </section>
-  )
-}
+  );
+};
 
-export default VideoSegmentation
+export default VideoSegmentation;

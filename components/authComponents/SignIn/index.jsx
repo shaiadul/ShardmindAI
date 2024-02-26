@@ -6,6 +6,7 @@ import React, { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/navigation";
+import Cookies from 'js-cookie';
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
@@ -33,7 +34,11 @@ const SignIn = () => {
 
       if (response.ok) {
         const data = await response.json();
-        localStorage.setItem("token", data.accessToken);
+        localStorage.setItem("token", data?.accessToken);
+        
+        Cookies.set('jwt', data?.accessToken, );
+        localStorage.setItem("id", data?.user?._id);
+        
         localStorage.setItem("email", email);
         toast("Successfully logged", {
           theme: "dark",

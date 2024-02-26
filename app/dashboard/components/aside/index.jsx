@@ -20,12 +20,12 @@ const AsideDashboard = () => {
           <li>
             <Link
               href="/dashboard/personalfeed"
-              className={` ${pathname == '/dashboard/personalfeed' ? 'bg-slate-600' : ''} relative flex flex-row items-center h-11 focus:outline-none text-white-600 hover:text-white-800 pr-6 rounded-md`}
+              className={` ${pathname == '/dashboard/personalfeed' ? 'bg-[#1b1c20]' : ''} relative flex flex-row items-center h-11 focus:outline-none text-white-600 hover:text-white-800 pr-6 rounded-md`}
             >
               <span className="inline-flex justify-center items-center ml-4">
                 <FontAwesomeIcon
                   icon={faHome}
-                  className="text-[#C61FA2] w-5 h-5"
+                  className={` faIcon `}
                 />
               </span>
               <span className="ml-2 text-md font-semibold tracking-wide truncate">
@@ -36,12 +36,12 @@ const AsideDashboard = () => {
           <li>
             <Link
               href="/dashboard/backgroundremoval"
-              className={`${pathname == '/dashboard/backgroundremoval' ? 'bg-slate-600' : ''} relative flex flex-row items-center h-11 focus:outline-none  text-white-600 hover:text-white-800 pr-6 rounded-md`}
+              className={`${pathname == '/dashboard/backgroundremoval' ? 'bg-[#1b1c20]' : ''} relative flex flex-row items-center h-11 focus:outline-none  text-white-600 hover:text-white-800 pr-6 rounded-md`}
             >
               <span className="inline-flex justify-center items-center ml-4">
                 <FontAwesomeIcon
                   icon={faImage}
-                  className="text-[#C61FA2] w-5 h-5"
+                  className={` w-5 h-5 ${pathname == '/dashboard/personalfeed' ? 'tex' : 'text-white'}`}
                 />
               </span>
               <span className="ml-2 text-md font-semibold tracking-wide truncate">
@@ -52,12 +52,12 @@ const AsideDashboard = () => {
           <li>
             <Link
               href="/dashboard/watermarkremoval"
-              className={`${pathname == '/dashboard/watermarkremoval' ? 'bg-slate-600' : ''} relative flex flex-row items-center h-11 focus:outline-none text-white-600 hover:text-white-800 pr-6 rounded-md`}
+              className={`${pathname == '/dashboard/watermarkremoval' ? 'bg-[#1b1c20]' : ''} relative flex flex-row items-center h-11 focus:outline-none text-white-600 hover:text-white-800 pr-6 rounded-md`}
             >
               <span className="inline-flex justify-center items-center ml-4">
                 <FontAwesomeIcon
                   icon={faWaterLadder}
-                  className="text-[#C61FA2] w-5 h-5"
+                  className={` w-5 h-5 ${pathname == '/dashboard/personalfeed' ? 'tex' : 'text-white'}`}
                 />
               </span>
               <span className="ml-2 text-md font-semibold tracking-wide truncate">
@@ -68,12 +68,12 @@ const AsideDashboard = () => {
           <li>
             <Link
               href="/dashboard/objectremoval"
-              className={`${pathname == '/dashboard/objectremoval' ? 'bg-slate-600' : ''} relative flex flex-row items-center h-11 focus:outline-none text-white-600 hover:text-white-800 pr-6 rounded-md`}
+              className={`${pathname == '/dashboard/objectremoval' ? 'bg-[#1b1c20]' : ''} relative flex flex-row items-center h-11 focus:outline-none text-white-600 hover:text-white-800 pr-6 rounded-md`}
             >
               <span className="inline-flex justify-center items-center ml-4">
                 <FontAwesomeIcon
                   icon={faObjectGroup}
-                  className="text-[#C61FA2] w-5 h-5"
+                  className={` w-5 h-5 ${pathname == '/dashboard/personalfeed' ? 'tex' : 'text-white'}`}
                 />
               </span>
               <span className="ml-2 text-md font-semibold tracking-wide truncate">
@@ -84,12 +84,12 @@ const AsideDashboard = () => {
           <li>
             <Link
               href="/dashboard/videosegmentation"
-              className={`${pathname == '/dashboard/videosegmentation' ? 'bg-slate-600' : ''} relative flex flex-row items-center h-11 focus:outline-none text-white-600 hover:text-white-800 pr-6 rounded-md`}
+              className={`${pathname == '/dashboard/videosegmentation' ? 'bg-[#1b1c20]' : ''} relative flex flex-row items-center h-11 focus:outline-none text-white-600 hover:text-white-800 pr-6 rounded-md`}
             >
               <span className="inline-flex justify-center items-center ml-4">
                 <FontAwesomeIcon
                   icon={faVideo}
-                  className="text-[#C61FA2] w-5 h-5"
+                  className={` w-5 h-5 ${pathname == '/dashboard/personalfeed' ? 'tex' : 'text-white'}`}
                 />
               </span>
               <span className="ml-2 text-md font-semibold tracking-wide truncate">

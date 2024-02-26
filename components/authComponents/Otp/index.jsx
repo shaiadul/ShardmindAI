@@ -51,7 +51,7 @@ const OtpVerify = () => {
       );
 
       if (response.ok) {
-        toast.error(`OTP verification successful !`, {
+        toast(`OTP verification successful !`, {
           theme: "dark",
         });
         router.push("/authentication/signin");

@@ -1,48 +1,70 @@
 "use client";
 import React, { useState } from "react";
+import axios from "axios";
 
 const ImageUpload = ({ setCurrentStep, setComplete }) => {
   const [imageURL, setImageURL] = useState(null);
+  const [isGreen, setIsGreen] = useState(false);
+  const [isFileUploaded, setIsFileUploaded] = useState(false);
+
+  const handleChangeGreenBg = () => {
+    setIsGreen((prevState) => !prevState);
+  };
+  console.log(isGreen);
 
   const handleFileUpload = async (event) => {
     const file = event.target.files[0];
     if (!file) return;
-    setCurrentStep((prev) => prev + 1);
-    try {
-      // Perform the image upload and get the URL
-      const imageURL = await uploadImage(file);
+    const id = localStorage.getItem("userId");
+    const token = localStorage.getItem("token");
 
-      // Update the state with the image URL
-      setImageURL(imageURL);
-      // Notify the parent component that image upload is complete
-      setCurrentStep((prev) => prev + 1);
-      setComplete(true);
-    } catch (error) {
-      console.error("Error uploading image:", error);
-      // Handle error if needed
-    }
-  };
-
-  const uploadImage = async (file) => {
-    const formData = new FormData();
-    formData.append("image", file);
-
-    const response = await fetch(
-      "https://api.imgbb.com/1/upload?key=7a0f43e157252e0ca3031dea1d8dcccd",
-      {
-        method: "POST",
-        body: formData,
-      }
+    const myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${token}`);
+    myHeaders.append(
+      "Cookie",
+      "currentUserRole=SH; jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWRhZmQ2M2Y1ODQ4NjJhZjk1NzllMTYiLCJyb2xlIjoiU0giLCJpYXQiOjE3MDg4NTU2OTgsImV4cCI6MTcxMTQ0NzY5OH0.Spna6acIy8tKasXgLe71VAKPq0VofjXZ9ORTFFyAChA"
     );
 
-    const data = await response.json();
+    const formdata = new FormData();
+    formdata.append("userId", id);
+    formdata.append("file", file, file["name"]);
 
-    if (data.status === 200) {
-      return data.data.url;
-    } else {
-      throw new Error(`Image upload failed: ${data.error.message}`);
-    }
+    const requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: formdata,
+      redirect: "follow",
+    };
+
+    fetch("https://api.shardmind.io/api/v1/storage/upload?file", requestOptions)
+      .then((response) => response.json())
+      .then((result) => {
+        setCurrentStep(2);
+        setIsFileUploaded(true);
+        const etagText = result?.result?.ETag;
+        const etag = etagText?.replace(/"/g, "");
+        const originalFileName = result?.result?.originalFilename;
+        const url = `users/${etag}/${originalFileName}`;
+        const data = {
+          auth_token: token,
+          url,
+          mode: isGreen ? "1" : "2",
+        };
+        // console.log(data);
+        axios
+          .post("https://x3gkf.apps.beam.cloud/bgremove", data, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
+          .then((response) => {
+            console.log(response);
+          })
+          .catch((error) => console.error("error from remove bg:", error));
+      })
+      .catch((error) => console.error(error));
   };
+
   const handleDownload = () => {
     // Implement the download logic here, for example using the browser's download feature
     if (imageURL) {
@@ -58,10 +80,10 @@ const ImageUpload = ({ setCurrentStep, setComplete }) => {
         htmlFor="dropzone-file"
         className="mx-auto cursor-pointer flex w-full max-w-lg flex-col items-center rounded-xl border_gradient_purple p-6 text-center"
       >
-        {imageURL ? (
+        {isFileUploaded ? (
           <>
             <img
-              src={imageURL}
+              src="https://static6.depositphotos.com/1021974/640/i/950/depositphotos_6403977-stock-photo-checkbox.jpg"
               alt="Uploaded"
               className="mt-2 rounded-md "
               style={{ maxWidth: "100%" }}
@@ -100,8 +122,20 @@ const ImageUpload = ({ setCurrentStep, setComplete }) => {
           </>
         )}
       </label>
-      {imageURL && (
-        <div className=" my-10 flex justify-center items-center">
+      <div className="flex justify-center items-center max-w-[180px] mx-auto my-4">
+        <span>White</span>
+        <label className="switch_obj flex justify-center my-5 mx-auto">
+          <input
+            type="checkbox"
+            checked={isGreen}
+            onChange={handleChangeGreenBg}
+          />
+          <span className="slider_obj"></span>
+        </label>
+        <span>Green</span>
+      </div>
+      {isFileUploaded && (
+        <div className="flex justify-center items-center">
           <button
             className="btn mt-2 bg-gradient-to-r from-pink-500 to-violet-500 rounded-lg px-2 py-1"
             onClick={handleDownload}
