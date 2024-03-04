@@ -1,29 +1,26 @@
 "use client";
-import React, { useState } from "react";
-import axios from "axios";
+import React, { useState, useEffect } from "react";
+import { S3Client, GetObjectCommand } from "@aws-sdk/client-s3";
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
 const ImageUpload = ({ setCurrentStep, setComplete }) => {
   const [imageURL, setImageURL] = useState(null);
   const [isGreen, setIsGreen] = useState(false);
   const [isFileUploaded, setIsFileUploaded] = useState(false);
+  const [currentFileUrl, setCurrentFileUrl] = useState(null);
 
   const handleChangeGreenBg = () => {
     setIsGreen((prevState) => !prevState);
   };
-  console.log(isGreen);
 
   const handleFileUpload = async (event) => {
     const file = event.target.files[0];
     if (!file) return;
-    const id = localStorage.getItem("userId");
+    const id = localStorage.getItem("id");
     const token = localStorage.getItem("token");
 
     const myHeaders = new Headers();
     myHeaders.append("Authorization", `Bearer ${token}`);
-    myHeaders.append(
-      "Cookie",
-      "currentUserRole=SH; jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWRhZmQ2M2Y1ODQ4NjJhZjk1NzllMTYiLCJyb2xlIjoiU0giLCJpYXQiOjE3MDg4NTU2OTgsImV4cCI6MTcxMTQ0NzY5OH0.Spna6acIy8tKasXgLe71VAKPq0VofjXZ9ORTFFyAChA"
-    );
 
     const formdata = new FormData();
     formdata.append("userId", id);
@@ -41,39 +38,79 @@ const ImageUpload = ({ setCurrentStep, setComplete }) => {
       .then((result) => {
         setCurrentStep(2);
         setIsFileUploaded(true);
-        const etagText = result?.result?.ETag;
-        const etag = etagText?.replace(/"/g, "");
+
         const originalFileName = result?.result?.originalFilename;
-        const url = `users/${etag}/${originalFileName}`;
-        const data = {
+        const url = `users/${id}/${originalFileName}`;
+        const data = JSON.stringify({
           auth_token: token,
           url,
-          mode: isGreen ? "1" : "2",
+          mode: isGreen ? 1 : 2,
+        });
+
+        console.log(data);
+
+        const myHeaders = new Headers();
+        myHeaders.append(
+          "Authorization",
+          "Basic ZTQxMDA1NDhmNzQ5MTkyMjc3OWE3NDg4MzQ5OTJhNzA6ZDE0NjYyNmRkZTQzOGI1MGJmNTMyNzFjYmNiZDFkMGI="
+        );
+        myHeaders.append("Content-Type", "application/json");
+
+        const requestOptions = {
+          method: "POST",
+          headers: myHeaders,
+          body: data,
+          redirect: "follow",
         };
-        // console.log(data);
-        axios
-          .post("https://x3gkf.apps.beam.cloud/bgremove", data, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          })
-          .then((response) => {
-            console.log(response);
-          })
-          .catch((error) => console.error("error from remove bg:", error));
-      })
-      .catch((error) => console.error(error));
+
+        fetch("https://x3gkf.apps.beam.cloud/bgremove/", requestOptions)
+          .then((response) => response.text())
+          .then((result) => readFile(result.slice(1, -1).toString()))
+          .catch((error) => console.error(error));
+      });
   };
 
-  const handleDownload = () => {
-    // Implement the download logic here, for example using the browser's download feature
-    if (imageURL) {
-      const link = document.createElement("a");
-      link.href = imageURL;
-      link.download = "downloaded_image";
-      link.click();
+  const readFile = async (fileKey) => {
+    const client = new S3Client({
+      region: "nyc3",
+      credentials: {
+        accessKeyId: "DO00E62JWRAHTAANAADR",
+        secretAccessKey: "Z5ICzGAlMg/7B3WTAUzAbPy9SX910ZrrVovadJjc98s",
+      },
+      endpoint: "https://nyc3.digitaloceanspaces.com",
+    });
+
+    const command = new GetObjectCommand({
+      Bucket: "shardmind.ai",
+      Key: fileKey,
+    });
+
+    try {
+      const url = await getSignedUrl(client, command, { expiresIn: 3600 });
+      console.log(url);
+      setCurrentFileUrl(url);
+      return url; // The URL is valid for 1 hour
+    } catch (error) {
+      console.error("error from download", error);
     }
   };
+
+  const downloadFile = async () => {
+    // Fetch the file content
+    const response = await fetch(currentFileUrl);
+    const blob = await response.blob();
+
+    // Create a link element and set its attributes
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "remove_bg.png";
+
+    // Append the link to the body, trigger a click event, and remove the link
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (
     <div className="font-sans my-20">
       <label
@@ -136,11 +173,10 @@ const ImageUpload = ({ setCurrentStep, setComplete }) => {
       </div>
       {isFileUploaded && (
         <div className="flex justify-center items-center">
-          <button
-            className="btn mt-2 bg-gradient-to-r from-pink-500 to-violet-500 rounded-lg px-2 py-1"
-            onClick={handleDownload}
-          >
-            Download
+          <button className="btn mt-2 bg-gradient-to-r from-pink-500 to-violet-500 rounded-lg px-2 py-1">
+            <a href={currentFileUrl} download={currentFileUrl}>
+              Download
+            </a>
           </button>
         </div>
       )}

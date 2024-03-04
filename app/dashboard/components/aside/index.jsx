@@ -93,7 +93,7 @@ const AsideDashboard = () => {
                 />
               </span>
               <span className="ml-2 text-md font-semibold tracking-wide truncate">
-                Video Segmentation
+                Image Segmentation
               </span>
             </Link>
           </li>
