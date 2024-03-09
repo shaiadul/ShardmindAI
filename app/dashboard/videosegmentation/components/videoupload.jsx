@@ -142,7 +142,7 @@ const VideoCanvas = ({ setCurrentStep, setComplete }) => {
       const mouseX = nativeEvent.clientX - canvasOffSet.left;
       const mouseY = nativeEvent.clientY - canvasOffSet.top;
 
-      context.fillStyle = "red"; // Set color
+      context.fillStyle = "#7FFF7F"; // Set color
       context.beginPath();
       context.arc(mouseX, mouseY, 3, 0, 2 * Math.PI);
       context.fill();

@@ -2,12 +2,14 @@
 import React, { useState, useEffect } from "react";
 import { S3Client, GetObjectCommand } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+import Loading from "@/components/loading/Loding";
 
 const ImageUpload = ({ setCurrentStep, setComplete }) => {
   const [imageURL, setImageURL] = useState(null);
   const [isGreen, setIsGreen] = useState(false);
   const [isFileUploaded, setIsFileUploaded] = useState(false);
   const [currentFileUrl, setCurrentFileUrl] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const handleChangeGreenBg = () => {
     setIsGreen((prevState) => !prevState);
@@ -15,6 +17,7 @@ const ImageUpload = ({ setCurrentStep, setComplete }) => {
 
   const handleFileUpload = async (event) => {
     const file = event.target.files[0];
+    setLoading(true);
     if (!file) return;
     const id = localStorage.getItem("id");
     const token = localStorage.getItem("token");
@@ -65,12 +68,15 @@ const ImageUpload = ({ setCurrentStep, setComplete }) => {
 
         fetch("https://x3gkf.apps.beam.cloud/bgremove/", requestOptions)
           .then((response) => response.text())
-          .then((result) => readFile(result.slice(1, -1).toString()))
+          .then(
+            (result) => readFile(result.slice(1, -1).toString()),
+          )
           .catch((error) => console.error(error));
       });
   };
 
   const readFile = async (fileKey) => {
+    setLoading(true);
     const client = new S3Client({
       region: "nyc3",
       credentials: {
@@ -89,6 +95,7 @@ const ImageUpload = ({ setCurrentStep, setComplete }) => {
       const url = await getSignedUrl(client, command, { expiresIn: 3600 });
       console.log(url);
       setCurrentFileUrl(url);
+      setLoading(false);
       return url; // The URL is valid for 1 hour
     } catch (error) {
       console.error("error from download", error);
@@ -113,52 +120,55 @@ const ImageUpload = ({ setCurrentStep, setComplete }) => {
 
   return (
     <div className="font-sans my-20">
-      <label
-        htmlFor="dropzone-file"
-        className="mx-auto cursor-pointer flex w-full max-w-lg flex-col items-center rounded-xl border_gradient_purple p-6 text-center"
-      >
-        {isFileUploaded ? (
-          <>
-            <img
-              src="https://static6.depositphotos.com/1021974/640/i/950/depositphotos_6403977-stock-photo-checkbox.jpg"
-              alt="Uploaded"
-              className="mt-2 rounded-md "
-              style={{ maxWidth: "100%" }}
-            />
-          </>
-        ) : (
-          <>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-10 w-10 text-[#AA26B6]"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth="2"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+      {loading && <Loading />}
+      {!loading && (
+        <label
+          htmlFor="dropzone-file"
+          className="mx-auto cursor-pointer flex w-full max-w-lg flex-col items-center rounded-xl border_gradient_purple p-6 text-center"
+        >
+          {currentFileUrl ? (
+            <>
+              <img
+                src={currentFileUrl}
+                alt="Uploaded"
+                className="mt-2 rounded-md "
+                style={{ maxWidth: "100%" }}
               />
-            </svg>
+            </>
+          ) : (
+            <>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-10 w-10 text-[#AA26B6]"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                />
+              </svg>
 
-            <h2 className="mt-4 text-xl font-medium text-gray-400 tracking-wide">
-              Upload File
-            </h2>
-            <p className="mt-2 text-gray-500 tracking-wide">
-              Upload or drag & drop your file SVG, PNG, JPG, or GIF.
-            </p>
+              <h2 className="mt-4 text-xl font-medium text-gray-400 tracking-wide">
+                Upload File
+              </h2>
+              <p className="mt-2 text-gray-500 tracking-wide">
+                Upload or drag & drop your file SVG, PNG, JPG, or GIF.
+              </p>
 
-            <input
-              id="dropzone-file"
-              type="file"
-              className="hidden"
-              onChange={handleFileUpload}
-            />
-          </>
-        )}
-      </label>
+              <input
+                id="dropzone-file"
+                type="file"
+                className="hidden"
+                onChange={handleFileUpload}
+              />
+            </>
+          )}
+        </label>
+      )}
       <div className="flex justify-center items-center max-w-[180px] mx-auto my-4">
         <span>White</span>
         <label className="switch_obj flex justify-center my-5 mx-auto">
@@ -171,7 +181,7 @@ const ImageUpload = ({ setCurrentStep, setComplete }) => {
         </label>
         <span>Green</span>
       </div>
-      {isFileUploaded && (
+      {currentFileUrl && (
         <div className="flex justify-center items-center">
           <button className="btn mt-2 bg-gradient-to-r from-pink-500 to-violet-500 rounded-lg px-2 py-1">
             <a href={currentFileUrl} download={currentFileUrl}>
